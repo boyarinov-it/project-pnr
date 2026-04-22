@@ -1,7 +1,8 @@
-from sqlalchemy import String
+﻿from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
+
 
 class Project(Base):
     __tablename__ = "projects"
@@ -12,3 +13,4 @@ class Project(Base):
 
     rooms = relationship("Room", back_populates="project", cascade="all, delete-orphan")
     lighting_groups = relationship("LightingGroup", back_populates="project", cascade="all, delete-orphan")
+    export_jobs = relationship("ExportJob", back_populates="project", cascade="all, delete-orphan")
