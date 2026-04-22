@@ -19,3 +19,4 @@ class ExportJob(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
     project = relationship("Project", back_populates="export_jobs")
+    export_files = relationship("ExportFile", back_populates="export_job", cascade="all, delete-orphan")

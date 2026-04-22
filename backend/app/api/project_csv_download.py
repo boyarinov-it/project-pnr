@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
 from app.models.project import Project
+from app.services.export_file_service import save_export_file
 from app.services.export_job_service import create_project_lighting_export_job
 from app.services.project_csv_generator import build_project_lighting_csv_preview
 from app.services.validation_engine import validate_project_export
@@ -30,7 +31,8 @@ def download_project_lighting_csv(project_id: int, db: Session = Depends(get_db)
         )
 
     preview = build_project_lighting_csv_preview(project)
-    create_project_lighting_export_job(db, project)
+    export_job = create_project_lighting_export_job(db, project)
+    save_export_file(db, export_job, preview.content)
 
     return Response(
         content=preview.content,
