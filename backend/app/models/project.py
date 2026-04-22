@@ -11,3 +11,4 @@ class Project(Base):
     code: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
 
     rooms = relationship("Room", back_populates="project", cascade="all, delete-orphan")
+    lighting_groups = relationship("LightingGroup", back_populates="project", cascade="all, delete-orphan")
