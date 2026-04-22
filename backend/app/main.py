@@ -9,6 +9,7 @@ from app.api.ets_preview import router as ets_preview_router
 from app.api.csv_preview import router as csv_preview_router
 from app.api.project_csv_preview import router as project_csv_preview_router
 from app.api.project_csv_download import router as project_csv_download_router
+from app.api.validation import router as validation_router
 from app.core.config import settings
 from app.db.session import engine
 
@@ -22,6 +23,7 @@ app.include_router(ets_preview_router)
 app.include_router(csv_preview_router)
 app.include_router(project_csv_preview_router)
 app.include_router(project_csv_download_router)
+app.include_router(validation_router)
 
 
 @app.get("/health")
