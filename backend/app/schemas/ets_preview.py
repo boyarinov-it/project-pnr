@@ -6,6 +6,7 @@ class EtsGroupAddressRowPreview(BaseModel):
     name: str
     datapoint_type: str
     function: str
+    description: str
 
 
 class LightingGroupEtsPreview(BaseModel):

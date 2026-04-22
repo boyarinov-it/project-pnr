@@ -2,6 +2,7 @@
 import io
 
 from app.models.lighting_group import LightingGroup
+from app.rules.export_profile import LIGHTING_CSV_COLUMNS
 from app.schemas.csv_preview import LightingGroupCsvPreview
 from app.services.ets_generator import build_lighting_group_ets_preview
 
@@ -11,14 +12,11 @@ def build_lighting_group_csv_preview(group: LightingGroup) -> LightingGroupCsvPr
 
     output = io.StringIO()
     writer = csv.writer(output, delimiter=';')
-    writer.writerow(["group_address", "name", "datapoint_type", "function"])
+    writer.writerow(LIGHTING_CSV_COLUMNS)
 
     for row in ets_preview.rows:
         writer.writerow([
-            row.group_address,
-            row.name,
-            row.datapoint_type,
-            row.function,
+            getattr(row, column) for column in LIGHTING_CSV_COLUMNS
         ])
 
     filename = f"lighting_group_{group.id}.csv"

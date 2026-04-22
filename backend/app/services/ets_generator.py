@@ -3,6 +3,15 @@ from app.schemas.ets_preview import EtsGroupAddressRowPreview, LightingGroupEtsP
 from app.services.knx_generator import build_lighting_group_knx_preview
 
 
+FUNCTION_DESCRIPTIONS = {
+    "switch": "Команда включения/выключения",
+    "dim_relative": "Относительное диммирование",
+    "brightness_percent": "Абсолютная яркость в процентах",
+    "status_switch": "Статус включения/выключения",
+    "status_brightness_percent": "Статус яркости в процентах",
+}
+
+
 def build_lighting_group_ets_preview(group: LightingGroup) -> LightingGroupEtsPreview:
     knx_preview = build_lighting_group_knx_preview(group)
 
@@ -14,6 +23,7 @@ def build_lighting_group_ets_preview(group: LightingGroup) -> LightingGroupEtsPr
                 name=obj.name,
                 datapoint_type=obj.datapoint_type,
                 function=obj.function,
+                description=FUNCTION_DESCRIPTIONS.get(obj.function, ""),
             )
         )
 
