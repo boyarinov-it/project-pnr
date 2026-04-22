@@ -5,6 +5,7 @@ class KnxObjectPreview(BaseModel):
     function: str
     name: str
     datapoint_type: str
+    group_address: str
 
 
 class LightingGroupKnxPreview(BaseModel):
