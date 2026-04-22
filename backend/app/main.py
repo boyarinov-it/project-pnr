@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from sqlalchemy import text
 
 from app.api.projects import router as projects_router
+from app.api.rooms import router as rooms_router
 from app.core.config import settings
 from app.db.session import engine
 
 app = FastAPI(title=settings.app_name)
 
 app.include_router(projects_router)
+app.include_router(rooms_router)
 
 @app.get("/health")
 def health():
