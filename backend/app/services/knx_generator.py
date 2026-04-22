@@ -1,43 +1,23 @@
 ﻿from app.models.lighting_group import LightingGroup
+from app.rules.lighting_profile import LIGHTING_KNX_PROFILE
 from app.schemas.knx_preview import KnxObjectPreview, LightingGroupKnxPreview
 
 
 def build_lighting_group_knx_preview(group: LightingGroup) -> LightingGroupKnxPreview:
     base_name = group.name
-    base_subgroup = (group.id - 1) * 5 + 1
+    base_subgroup = (group.id - 1) * len(LIGHTING_KNX_PROFILE) + 1
 
-    objects = [
-        KnxObjectPreview(
-            function="switch",
-            name=f"{base_name} Вкл/Выкл",
-            datapoint_type="DPST-1-1",
-            group_address=f"1/1/{base_subgroup}",
-        ),
-        KnxObjectPreview(
-            function="dim_relative",
-            name=f"{base_name} Диммирование относительное",
-            datapoint_type="DPST-3-7",
-            group_address=f"1/1/{base_subgroup + 1}",
-        ),
-        KnxObjectPreview(
-            function="brightness_percent",
-            name=f"{base_name} Яркость %",
-            datapoint_type="DPST-5-1",
-            group_address=f"1/1/{base_subgroup + 2}",
-        ),
-        KnxObjectPreview(
-            function="status_switch",
-            name=f"{base_name} Статус Вкл/Выкл",
-            datapoint_type="DPST-1-1",
-            group_address=f"1/1/{base_subgroup + 3}",
-        ),
-        KnxObjectPreview(
-            function="status_brightness_percent",
-            name=f"{base_name} Статус Яркость %",
-            datapoint_type="DPST-5-1",
-            group_address=f"1/1/{base_subgroup + 4}",
-        ),
-    ]
+    objects = []
+
+    for item in LIGHTING_KNX_PROFILE:
+        objects.append(
+            KnxObjectPreview(
+                function=item["function"],
+                name=f"{base_name} {item['suffix']}",
+                datapoint_type=item["datapoint_type"],
+                group_address=f"1/1/{base_subgroup + item['address_offset']}",
+            )
+        )
 
     return LightingGroupKnxPreview(
         lighting_group_id=group.id,
