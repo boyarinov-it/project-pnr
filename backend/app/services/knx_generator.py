@@ -1,16 +1,12 @@
 ﻿from app.core.standard_profile import STANDARD_PROFILE
 from app.models.lighting_group import LightingGroup
 from app.schemas.knx_preview import KnxObjectPreview, LightingGroupKnxPreview
+from app.services.group_address_engine import build_lighting_group_address
+from app.services.naming_engine import build_lighting_object_name
 
 
 def build_lighting_group_knx_preview(group: LightingGroup) -> LightingGroupKnxPreview:
-    base_name = group.name
-    lighting_profile = STANDARD_PROFILE["lighting"]
-    function_rules = lighting_profile["functions"]
-
-    base_subgroup = (group.id - 1) * len(function_rules) + 1
-    main_group = lighting_profile["main_group"]
-    middle_group = lighting_profile["middle_group"]
+    function_rules = STANDARD_PROFILE["lighting"]["functions"]
 
     objects = []
 
@@ -18,9 +14,9 @@ def build_lighting_group_knx_preview(group: LightingGroup) -> LightingGroupKnxPr
         objects.append(
             KnxObjectPreview(
                 function=item["function"],
-                name=f"{base_name} {item['suffix']}",
+                name=build_lighting_object_name(group, item["suffix"]),
                 datapoint_type=item["datapoint_type"],
-                group_address=f"{main_group}/{middle_group}/{base_subgroup + item['address_offset']}",
+                group_address=build_lighting_group_address(group, item["address_offset"]),
             )
         )
 

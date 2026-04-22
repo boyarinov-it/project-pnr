@@ -12,8 +12,13 @@ export:
     - description
 
 lighting:
-  main_group: 1
-  middle_group: 1
+  addressing:
+    main_group: 1
+    middle_group: 1
+    objects_per_group: 5
+    start_subgroup: 1
+
+  naming_pattern: "{room_name} {group_name} {suffix}"
 
   functions:
     - function: switch
