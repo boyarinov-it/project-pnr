@@ -1,0 +1,47 @@
+﻿profile_name: company_knx_lighting_v1
+
+export:
+  separator: ";"
+  encoding_preview: "utf-8"
+  encoding_file: "utf-8-sig"
+  csv_columns:
+    - group_address
+    - name
+    - datapoint_type
+    - function
+    - description
+
+lighting:
+  main_group: 1
+  middle_group: 1
+
+  functions:
+    - function: switch
+      suffix: "Вкл/Выкл"
+      datapoint_type: "DPST-1-1"
+      address_offset: 0
+      description: "Команда включения/выключения"
+
+    - function: dim_relative
+      suffix: "Диммирование относительное"
+      datapoint_type: "DPST-3-7"
+      address_offset: 1
+      description: "Относительное диммирование"
+
+    - function: brightness_percent
+      suffix: "Яркость %"
+      datapoint_type: "DPST-5-1"
+      address_offset: 2
+      description: "Абсолютная яркость в процентах"
+
+    - function: status_switch
+      suffix: "Статус Вкл/Выкл"
+      datapoint_type: "DPST-1-1"
+      address_offset: 3
+      description: "Статус включения/выключения"
+
+    - function: status_brightness_percent
+      suffix: "Статус Яркость %"
+      datapoint_type: "DPST-5-1"
+      address_offset: 4
+      description: "Статус яркости в процентах"
