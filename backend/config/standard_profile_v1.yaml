@@ -1,22 +1,49 @@
 ﻿profile_name: company_knx_standard_v1
+profile_version: v1
+status: working_baseline
 
 main_groups:
   central: 0
   lighting: 1
   mechanisms: 2
   floor_heating: 3
+  leak_protection: 4
   climate: 5
-  rgbw: 21
+  switches: 6
+  sockets_and_contactors: 7
+  exhaust_fans: 8
+  humidity: 9
+  access_control: 10
+  rgb_dali1: 11
+  rgb_scenes_control4: 12
+  resource_metering: 13
+  mirror_heating: 14
+  climate_extended: 15
+  auto_blocking: 20
+  rgbw_dt8: 21
+  humidification: 25
+  logical_functions: 30
+  media_control: 31
 
 export:
-  ets_csv_encoding: cp1251
+  supported_encodings:
+    - cp1251
+    - utf-8-sig
+  default_encoding: cp1251
   separator: ","
+  include_flat_header_row: false
 
 lighting:
-  middle_group:
-    start_index_group3: 5
+  main_group_key: lighting
+
+  reserved:
+    subgroup_from: 0
+    subgroup_to: 4
+
+  grouping:
     blocks_in_middle_group: 50
     rows_in_block: 5
+    start_index_group3: 5
 
   header_rows:
     - "Освещение, , ,1/-/-,,,,,Auto"
@@ -29,21 +56,165 @@ lighting:
 
   functions:
     - index: 1
-      suffix: "Вкл"
+      code: onoff
+      label: "Вкл"
       dpt: "DPST-1-1"
 
     - index: 2
-      suffix: "Димм"
+      code: dim_relative
+      label: "Димм"
       dpt: "DPST-3-7"
 
     - index: 3
-      suffix: "Яркость%"
+      code: brightness_percent
+      label: "Яркость%"
       dpt: "DPST-5-1"
 
     - index: 4
-      suffix: "Статус"
+      code: status
+      label: "Статус"
       dpt: "DPST-1-1"
 
     - index: 5
-      suffix: "Статус%"
+      code: status_percent
+      label: "Статус%"
       dpt: "DPST-5-1"
+
+  naming:
+    object_name_pattern: "_{group_code}__{function_label}_{room_code}-{group_name}"
+
+  description:
+    pattern: "{device_type} {device_address} Выход:{device_output}{dimmer_suffix} Нагрузка:{load_type}"
+    dimmer_suffix_pattern: " - Диммер: {dimmer_channel}"
+
+  validation:
+    required_fields:
+      - group.code
+      - group.name
+      - room.code
+      - load_type
+      - device_type
+      - device_address
+      - device_output
+    code_must_be_numeric: true
+    unique_generated_names: true
+    unique_group_addresses: true
+
+mechanisms:
+  main_group_key: mechanisms
+
+  reserved:
+    subgroup_from: 0
+    subgroup_to: 9
+
+  addressing:
+    start_subgroup: 10
+    end_subgroup: 19
+    addresses_per_mechanism: 10
+
+  functions:
+    - subgroup: 10
+      code: movement
+      label: "Движение"
+    - subgroup: 11
+      code: stop
+      label: "Стоп"
+    - subgroup: 12
+      code: position_percent
+      label: "Положение_%"
+    - subgroup: 13
+      code: position_status_percent
+      label: "Положение_%_Статус"
+    - subgroup: 14
+      code: lamella_position
+      label: "Положение_Ламели"
+    - subgroup: 15
+      code: lamella_status
+      label: "Ламели_%_Статус"
+    - subgroup: 16
+      code: movement_status
+      label: "Движение_Статус"
+    - subgroup: 17
+      code: direction_status
+      label: "Статус_направления"
+    - subgroup: 18
+      code: reverse
+      label: "Реверс"
+    - subgroup: 19
+      code: reserve
+      label: "Резерв"
+
+floor_heating:
+  main_group_key: floor_heating
+
+  reserved:
+    subgroup_from: 0
+    subgroup_to: 9
+
+  addressing:
+    start_subgroup: 10
+    end_subgroup: 19
+    addresses_per_thermostat: 10
+
+climate:
+  main_group_key: climate
+
+  reserved:
+    subgroup_from: 0
+    subgroup_to: 9
+
+  addressing:
+    start_subgroup: 10
+    end_subgroup: 29
+    addresses_per_thermostat: 20
+
+rgbw_dt8:
+  main_group_key: rgbw_dt8
+
+  reserved:
+    subgroup_from: 0
+    subgroup_to: 9
+
+  addressing:
+    start_subgroup: 10
+    end_subgroup: 19
+    addresses_per_group: 10
+
+  functions:
+    - subgroup: 10
+      code: onoff
+      label: "Вкл/выкл"
+    - subgroup: 11
+      code: dim_relative
+      label: "Димм"
+    - subgroup: 12
+      code: brightness_percent
+      label: "Яркость%"
+    - subgroup: 13
+      code: status
+      label: "Статус"
+    - subgroup: 14
+      code: status_percent
+      label: "Статус%"
+    - subgroup: 15
+      code: rgbw_dim
+      label: "RGBW_Димм"
+    - subgroup: 16
+      code: rgbw_dim_status
+      label: "Статус_RGBW_Димм"
+    - subgroup: 17
+      code: reserve_1
+      label: "Резерв"
+    - subgroup: 18
+      code: reserve_2
+      label: "Резерв"
+    - subgroup: 19
+      code: reserve_3
+      label: "Резерв"
+
+yandex_disk:
+  folder_structure:
+    - "01_source"
+    - "02_generated"
+    - "03_exports"
+    - "99_archive"
