@@ -1,4 +1,7 @@
-﻿from fastapi import APIRouter, Depends, HTTPException
+﻿from pathlib import Path
+
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
@@ -22,4 +25,21 @@ def list_project_export_files(project_id: int, db: Session = Depends(get_db)):
         .filter(ExportJob.project_id == project_id)
         .order_by(ExportFile.id.desc())
         .all()
+    )
+
+
+@router.get("/export-files/{export_file_id}/download")
+def download_export_file(export_file_id: int, db: Session = Depends(get_db)):
+    export_file = db.query(ExportFile).filter(ExportFile.id == export_file_id).first()
+    if not export_file:
+        raise HTTPException(status_code=404, detail="Export file not found")
+
+    file_path = Path(export_file.storage_path)
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Stored file not found on disk")
+
+    return FileResponse(
+        path=str(file_path),
+        filename=export_file.filename,
+        media_type="text/csv; charset=utf-8",
     )
