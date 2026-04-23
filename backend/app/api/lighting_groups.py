@@ -93,5 +93,48 @@ def list_lighting_groups(project_id: int, db: Session = Depends(get_db)):
                 display_name=f"{room.room_number}.{room.name_ru or room.name}-{group.name}",
             )
         )
+@router.get("/projects/{project_id}/lighting-groups/{group_id}/knx-preview")
+def get_lighting_group_knx_preview(project_id: int, group_id: int, db: Session = Depends(get_db)):
+    group = (
+        db.query(LightingGroup)
+        .join(Room, LightingGroup.room_id == Room.id)
+        .filter(LightingGroup.project_id == project_id, LightingGroup.id == group_id)
+        .first()
+    )
 
+    if not group:
+        raise HTTPException(status_code=404, detail="Lighting group not found")
+
+    room = group.room
+    room_name = room.name_ru or room.name
+    base_name = f"{room.room_number}.{room_name}-{group.name}"
+
+    return [
+        {
+            "function": "Вкл",
+            "name": f"_{room.room_number}__Вкл_{base_name}",
+            "dpt": "DPST-1-1",
+        },
+        {
+            "function": "Димм",
+            "name": f"_{room.room_number}__Димм_{base_name}",
+            "dpt": "DPST-3-7",
+        },
+        {
+            "function": "Яркость%",
+            "name": f"_{room.room_number}__Яркость%_{base_name}",
+            "dpt": "DPST-5-1",
+        },
+        {
+            "function": "Статус",
+            "name": f"_{room.room_number}__Статус_{base_name}",
+            "dpt": "DPST-1-1",
+        },
+        {
+            "function": "Статус%",
+            "name": f"_{room.room_number}__Статус%_{base_name}",
+            "dpt": "DPST-5-1",
+        },
+    ]
     return result
+
