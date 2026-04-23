@@ -11,8 +11,6 @@ def build_lighting_ets_csv(project: Project) -> str:
         if not group.room:
             continue
 
-        # Временное приближение к VBA:
-        # group.code пока трактуем как номер группы света
         if not group.code or not str(group.code).isdigit():
             continue
 
@@ -23,7 +21,7 @@ def build_lighting_ets_csv(project: Project) -> str:
         group_counter3 = int(arr_group_numbers[2]) - 1
 
         output_dimmer = ""
-        if getattr(group, "dimmer_channel", None):
+        if group.dimmer_channel:
             output_dimmer = f" - Диммер: {group.dimmer_channel}"
 
         for item in LIGHTING_ETS_PROFILE["function_rows"]:
@@ -35,9 +33,9 @@ def build_lighting_ets_csv(project: Project) -> str:
             )
 
             description = (
-                f"{getattr(group, 'device_type', '')} "
-                f"{getattr(group, 'device_address', '')} "
-                f"Выход:{getattr(group, 'device_output', '')}"
+                f"{group.device_type or ''} "
+                f"{group.device_address or ''} "
+                f"Выход:{group.device_output or ''}"
                 f"{output_dimmer} "
                 f"Нагрузка:{group.load_type}"
             ).strip()
