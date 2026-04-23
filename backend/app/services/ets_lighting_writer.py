@@ -2,6 +2,7 @@
 from app.services.description_builder import build_lighting_description
 from app.services.ets_lighting_addressing import get_numbers_of_groups
 from app.services.lighting_validator import validate_lighting_groups_for_export
+from app.services.naming_builder import build_lighting_object_name
 
 
 def build_lighting_ets_csv(project) -> str:
@@ -24,13 +25,7 @@ def build_lighting_ets_csv(project) -> str:
         for item in LIGHTING_ETS_PROFILE["function_rows"]:
             group_counter3 += 1
 
-            object_name = LIGHTING_ETS_PROFILE["naming"]["object_name_pattern"].format(
-                group_code=group.code,
-                function_label=item["label"],
-                room_code=group.room.code,
-                group_name=group.name,
-            )
-
+            object_name = build_lighting_object_name(group, item["label"])
             description = build_lighting_description(group)
 
             row = (

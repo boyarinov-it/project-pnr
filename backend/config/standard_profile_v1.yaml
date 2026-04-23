@@ -59,29 +59,28 @@ lighting:
       code: onoff
       label: "Вкл"
       dpt: "DPST-1-1"
-
     - index: 2
       code: dim_relative
       label: "Димм"
       dpt: "DPST-3-7"
-
     - index: 3
       code: brightness_percent
       label: "Яркость%"
       dpt: "DPST-5-1"
-
     - index: 4
       code: status
       label: "Статус"
       dpt: "DPST-1-1"
-
     - index: 5
       code: status_percent
       label: "Статус%"
       dpt: "DPST-5-1"
 
   naming:
-    object_name_pattern: "_{group_code}__{function_label}_{room_code}-{group_name}"
+    locale: ru
+    object_name_pattern_code: "_{group_code}__{function_label}_{room_code}-{group_name}"
+    object_name_pattern_ru: "_{group_code}__{function_label}_{room_name_ru}-{group_name}"
+    object_name_pattern_en: "_{group_code}__{function_label}_{room_name_en}-{group_name}"
 
   description:
     pattern: "{device_type} {device_address} Выход:{device_output}{dimmer_suffix} Нагрузка:{load_type}"
@@ -102,55 +101,19 @@ lighting:
 
 mechanisms:
   main_group_key: mechanisms
-
   reserved:
     subgroup_from: 0
     subgroup_to: 9
-
   addressing:
     start_subgroup: 10
     end_subgroup: 19
     addresses_per_mechanism: 10
 
-  functions:
-    - subgroup: 10
-      code: movement
-      label: "Движение"
-    - subgroup: 11
-      code: stop
-      label: "Стоп"
-    - subgroup: 12
-      code: position_percent
-      label: "Положение_%"
-    - subgroup: 13
-      code: position_status_percent
-      label: "Положение_%_Статус"
-    - subgroup: 14
-      code: lamella_position
-      label: "Положение_Ламели"
-    - subgroup: 15
-      code: lamella_status
-      label: "Ламели_%_Статус"
-    - subgroup: 16
-      code: movement_status
-      label: "Движение_Статус"
-    - subgroup: 17
-      code: direction_status
-      label: "Статус_направления"
-    - subgroup: 18
-      code: reverse
-      label: "Реверс"
-    - subgroup: 19
-      code: reserve
-      label: "Резерв"
-
 floor_heating:
   main_group_key: floor_heating
-
   reserved:
     subgroup_from: 0
     subgroup_to: 9
-
   addressing:
     start_subgroup: 10
     end_subgroup: 19
@@ -158,11 +121,9 @@ floor_heating:
 
 climate:
   main_group_key: climate
-
   reserved:
     subgroup_from: 0
     subgroup_to: 9
-
   addressing:
     start_subgroup: 10
     end_subgroup: 29
@@ -170,16 +131,13 @@ climate:
 
 rgbw_dt8:
   main_group_key: rgbw_dt8
-
   reserved:
     subgroup_from: 0
     subgroup_to: 9
-
   addressing:
     start_subgroup: 10
     end_subgroup: 19
     addresses_per_group: 10
-
   functions:
     - subgroup: 10
       code: onoff
