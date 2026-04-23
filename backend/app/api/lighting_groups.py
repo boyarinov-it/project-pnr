@@ -54,6 +54,7 @@ def create_lighting_group(project_id: int, payload: LightingGroupCreate, db: Ses
         device_address=group.device_address,
         device_output=group.device_output,
         dimmer_channel=group.dimmer_channel,
+        display_name=f"{room.room_number}.{room.name_ru or room.name}-{group.name}",
     )
 
 
@@ -89,6 +90,7 @@ def list_lighting_groups(project_id: int, db: Session = Depends(get_db)):
                 device_address=group.device_address,
                 device_output=group.device_output,
                 dimmer_channel=group.dimmer_channel,
+                display_name=f"{room.room_number}.{room.name_ru or room.name}-{group.name}",
             )
         )
 
