@@ -35,7 +35,7 @@ def build_lighting_ets_csv(project) -> str:
 
             row = (
                 f" , ,{object_name},"
-                f"{LIGHTING_ETS_PROFILE['main_group']}/{group_counter2}/{group_counter3},"
+                f"{LIGHTING_ETS_PROFILE['main_group']}/{group_counter2}/{group_counter3}"
                 f",,,{description},{item['dpt']},Auto"
             )
             rows.append(row)
