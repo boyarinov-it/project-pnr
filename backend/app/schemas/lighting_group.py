@@ -2,7 +2,7 @@
 
 
 class LightingGroupCreate(BaseModel):
-    room_id: int
+    room_number: str
     name: str
     code: str
     load_type: str
@@ -17,6 +17,8 @@ class LightingGroupRead(BaseModel):
     id: int
     project_id: int
     room_id: int
+    room_number: str
+    room_name: str
     name: str
     code: str
     load_type: str
