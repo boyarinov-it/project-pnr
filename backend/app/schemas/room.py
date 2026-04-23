@@ -2,6 +2,7 @@
 
 
 class RoomCreate(BaseModel):
+    room_number: str
     name: str
     code: str
     name_ru: str | None = None
@@ -11,6 +12,7 @@ class RoomCreate(BaseModel):
 class RoomRead(BaseModel):
     id: int
     project_id: int
+    room_number: str
     name: str
     code: str
     name_ru: str | None = None

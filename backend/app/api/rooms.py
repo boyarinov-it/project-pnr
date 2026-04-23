@@ -1,4 +1,5 @@
 ﻿from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
@@ -17,13 +18,20 @@ def create_room(project_id: int, payload: RoomCreate, db: Session = Depends(get_
 
     room = Room(
         project_id=project_id,
+        room_number=payload.room_number,
         name=payload.name,
         code=payload.code,
         name_ru=payload.name_ru,
         name_en=payload.name_en,
     )
     db.add(room)
-    db.commit()
+
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Room number must be unique within project")
+
     db.refresh(room)
     return room
 
