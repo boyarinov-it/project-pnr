@@ -1,9 +1,12 @@
-﻿profile_name: company_knx_lighting_v1
+﻿profile_name: lighting_csv_company_v1
 
 export:
   separator: ";"
-  encoding_preview: "utf-8"
-  encoding_file: "utf-8-sig"
+  default_encoding: "utf-8-sig"
+  supported_encodings:
+    - "utf-8-sig"
+    - "cp1251"
+
   csv_columns:
     - group_address
     - name

@@ -41,5 +41,5 @@ def download_export_file(export_file_id: int, db: Session = Depends(get_db)):
     return FileResponse(
         path=str(file_path),
         filename=export_file.filename,
-        media_type="text/csv; charset=utf-8",
+        media_type="text/csv",
     )
