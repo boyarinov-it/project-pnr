@@ -3,9 +3,7 @@
 import yaml
 
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-PROFILE_PATH = BASE_DIR / "config" / "standard_profile_v1.yaml"
+PROFILE_PATH = Path(__file__).resolve().parents[2] / "config" / "standard_profile_v1.yaml"
 
-
-with PROFILE_PATH.open("r", encoding="utf-8") as f:
+with open(PROFILE_PATH, "r", encoding="utf-8") as f:
     STANDARD_PROFILE = yaml.safe_load(f)

@@ -14,6 +14,7 @@ from app.api.export_jobs import router as export_jobs_router
 from app.api.export_files import router as export_files_router
 from app.api.ets_csv_v1 import router as ets_csv_v1_router
 from app.api.ets_csv_v1_download import router as ets_csv_v1_download_router
+from app.api.standards import router as standards_router
 from app.core.config import settings
 from app.db.session import engine
 
@@ -32,6 +33,7 @@ app.include_router(export_jobs_router)
 app.include_router(export_files_router)
 app.include_router(ets_csv_v1_router)
 app.include_router(ets_csv_v1_download_router)
+app.include_router(standards_router)
 
 
 @app.get("/health")

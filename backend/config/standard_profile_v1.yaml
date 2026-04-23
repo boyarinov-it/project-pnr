@@ -1,55 +1,49 @@
-﻿profile_name: lighting_csv_company_v1
+﻿profile_name: company_knx_standard_v1
+
+main_groups:
+  central: 0
+  lighting: 1
+  mechanisms: 2
+  floor_heating: 3
+  climate: 5
+  rgbw: 21
 
 export:
-  separator: ";"
-  default_encoding: "utf-8-sig"
-  supported_encodings:
-    - "utf-8-sig"
-    - "cp1251"
-
-  csv_columns:
-    - group_address
-    - name
-    - datapoint_type
-    - function
-    - description
+  ets_csv_encoding: cp1251
+  separator: ","
 
 lighting:
-  addressing:
-    main_group: 1
-    middle_group: 1
-    objects_per_group: 5
-    start_subgroup: 1
+  middle_group:
+    start_index_group3: 5
+    blocks_in_middle_group: 50
+    rows_in_block: 5
 
-  naming_pattern: "{room_name} {group_name} {suffix}"
+  header_rows:
+    - "Освещение, , ,1/-/-,,,,,Auto"
+    - ",1-50, ,1/1/-,,,,,Auto"
+    - ", ,Выключение всего освещения,1/1/0,,,,DPST-1-1,Auto"
+    - ", ,Мастер резерв,1/1/1,,,,,Auto"
+    - ", ,Мастер резерв,1/1/2,,,,,Auto"
+    - ", ,Мастер резерв,1/1/3,,,,,Auto"
+    - ", ,Мастер резерв,1/1/4,,,,,Auto"
 
   functions:
-    - function: switch
-      suffix: "Вкл/Выкл"
-      datapoint_type: "DPST-1-1"
-      address_offset: 0
-      description: "Команда включения/выключения"
+    - index: 1
+      suffix: "Вкл"
+      dpt: "DPST-1-1"
 
-    - function: dim_relative
-      suffix: "Диммирование относительное"
-      datapoint_type: "DPST-3-7"
-      address_offset: 1
-      description: "Относительное диммирование"
+    - index: 2
+      suffix: "Димм"
+      dpt: "DPST-3-7"
 
-    - function: brightness_percent
-      suffix: "Яркость %"
-      datapoint_type: "DPST-5-1"
-      address_offset: 2
-      description: "Абсолютная яркость в процентах"
+    - index: 3
+      suffix: "Яркость%"
+      dpt: "DPST-5-1"
 
-    - function: status_switch
-      suffix: "Статус Вкл/Выкл"
-      datapoint_type: "DPST-1-1"
-      address_offset: 3
-      description: "Статус включения/выключения"
+    - index: 4
+      suffix: "Статус"
+      dpt: "DPST-1-1"
 
-    - function: status_brightness_percent
-      suffix: "Статус Яркость %"
-      datapoint_type: "DPST-5-1"
-      address_offset: 4
-      description: "Статус яркости в процентах"
+    - index: 5
+      suffix: "Статус%"
+      dpt: "DPST-5-1"

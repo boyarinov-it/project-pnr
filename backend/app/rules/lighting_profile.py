@@ -1,24 +1,12 @@
-﻿LIGHTING_ETS_PROFILE = {
-    "main_group": 1,
-    "start_index_group3": 5,
-    "blocks_in_middle_group": 50,
-    "rows_in_block": 5,
-    "csv_separator": ",",
-    "header_rows": [
-        "Освещение, , ,1/-/-,,,,,Auto",
-        ",1-50, ,1/1/-,,,,,Auto",
-        ", ,Выключение всего освещения,1/1/0,,,,DPST-1-1,Auto",
-        ", ,Мастер резерв,1/1/1,,,,,Auto",
-        ", ,Мастер резерв,1/1/2,,,,,Auto",
-        ", ,Мастер резерв,1/1/3,,,,,Auto",
-        ", ,Мастер резерв,1/1/4,,,,,Auto",
-    ],
-    "function_rows": [
-        {"index": 1, "suffix": "Вкл", "dpt": "DPST-1-1"},
-        {"index": 2, "suffix": "Димм", "dpt": "DPST-3-7"},
-        {"index": 3, "suffix": "Яркость%", "dpt": "DPST-5-1"},
-        {"index": 4, "suffix": "Статус", "dpt": "DPST-1-1"},
-        {"index": 5, "suffix": "Статус%", "dpt": "DPST-5-1"},
-    ],
-}
+﻿from app.core.standard_profile import STANDARD_PROFILE
 
+
+LIGHTING_ETS_PROFILE = {
+    "main_group": STANDARD_PROFILE["main_groups"]["lighting"],
+    "start_index_group3": STANDARD_PROFILE["lighting"]["middle_group"]["start_index_group3"],
+    "blocks_in_middle_group": STANDARD_PROFILE["lighting"]["middle_group"]["blocks_in_middle_group"],
+    "rows_in_block": STANDARD_PROFILE["lighting"]["middle_group"]["rows_in_block"],
+    "csv_separator": STANDARD_PROFILE["export"]["separator"],
+    "header_rows": STANDARD_PROFILE["lighting"]["header_rows"],
+    "function_rows": STANDARD_PROFILE["lighting"]["functions"],
+}
