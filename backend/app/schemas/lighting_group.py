@@ -13,6 +13,18 @@ class LightingGroupCreate(BaseModel):
     dimmer_channel: str | None = None
 
 
+class LightingGroupUpdate(BaseModel):
+    room_number: str
+    name: str
+    code: str
+    load_type: str
+    quantity: int
+    device_type: str | None = None
+    device_address: str | None = None
+    device_output: str | None = None
+    dimmer_channel: str | None = None
+
+
 class LightingGroupRead(BaseModel):
     id: int
     project_id: int

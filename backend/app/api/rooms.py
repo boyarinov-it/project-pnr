@@ -3,18 +3,16 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.models.project import Project
 from app.models.room import Room
 from app.schemas.room import RoomCreate, RoomRead, RoomUpdate
+from app.services.explication_resolver import get_project_or_404, get_room_by_number_or_404
 
 router = APIRouter(tags=["rooms"])
 
 
 @router.post("/projects/{project_id}/rooms", response_model=RoomRead)
 def create_room(project_id: int, payload: RoomCreate, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
+    get_project_or_404(db, project_id)
 
     room = Room(
         project_id=project_id,
@@ -60,9 +58,7 @@ def update_room(room_id: int, payload: RoomUpdate, db: Session = Depends(get_db)
 
 @router.get("/projects/{project_id}/rooms", response_model=list[RoomRead])
 def list_rooms(project_id: int, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
+    get_project_or_404(db, project_id)
 
     return (
         db.query(Room)
@@ -74,16 +70,5 @@ def list_rooms(project_id: int, db: Session = Depends(get_db)):
 
 @router.get("/projects/{project_id}/rooms/by-number/{room_number}", response_model=RoomRead)
 def get_room_by_number(project_id: int, room_number: str, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-
-    room = (
-        db.query(Room)
-        .filter(Room.project_id == project_id, Room.room_number == room_number)
-        .first()
-    )
-    if not room:
-        raise HTTPException(status_code=404, detail="Room with given room_number not found")
-
-    return room
+    get_project_or_404(db, project_id)
+    return get_room_by_number_or_404(db, project_id, room_number)

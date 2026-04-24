@@ -1,10 +1,10 @@
-﻿from fastapi import APIRouter, Depends
+﻿from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
 from app.models.lighting_group import LightingGroup
 from app.models.room import Room
-from app.schemas.lighting_group import LightingGroupCreate, LightingGroupRead
+from app.schemas.lighting_group import LightingGroupCreate, LightingGroupRead, LightingGroupUpdate
 from app.services.explication_resolver import get_project_or_404, get_room_by_number_or_404
 
 router = APIRouter(tags=["lighting-groups"])
@@ -61,6 +61,46 @@ def create_lighting_group(project_id: int, payload: LightingGroupCreate, db: Ses
     db.refresh(group)
 
     return build_lighting_group_read(group)
+
+
+@router.put("/lighting-groups/{lighting_group_id}", response_model=LightingGroupRead)
+def update_lighting_group(
+    lighting_group_id: int,
+    payload: LightingGroupUpdate,
+    db: Session = Depends(get_db),
+):
+    group = db.query(LightingGroup).filter(LightingGroup.id == lighting_group_id).first()
+    if not group:
+        raise HTTPException(status_code=404, detail="Lighting group not found")
+
+    room = get_room_by_number_or_404(db, group.project_id, payload.room_number)
+
+    group.room_id = room.id
+    group.name = payload.name
+    group.code = payload.code
+    group.load_type = payload.load_type
+    group.quantity = payload.quantity
+    group.device_type = payload.device_type
+    group.device_address = payload.device_address
+    group.device_output = payload.device_output
+    group.dimmer_channel = payload.dimmer_channel
+
+    db.commit()
+    db.refresh(group)
+
+    return build_lighting_group_read(group)
+
+
+@router.delete("/lighting-groups/{lighting_group_id}")
+def delete_lighting_group(lighting_group_id: int, db: Session = Depends(get_db)):
+    group = db.query(LightingGroup).filter(LightingGroup.id == lighting_group_id).first()
+    if not group:
+        raise HTTPException(status_code=404, detail="Lighting group not found")
+
+    db.delete(group)
+    db.commit()
+
+    return {"status": "deleted", "lighting_group_id": lighting_group_id}
 
 
 @router.get("/projects/{project_id}/lighting-groups", response_model=list[LightingGroupRead])
