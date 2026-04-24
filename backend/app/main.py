@@ -4,6 +4,7 @@ from sqlalchemy import text
 from app.api.projects import router as projects_router
 from app.api.rooms import router as rooms_router
 from app.api.lighting_groups import router as lighting_groups_router
+from app.api.mechanisms import router as mechanisms_router
 
 from app.api.standards import router as standards_router
 from app.api.lighting_validation import router as lighting_validation_router
@@ -30,6 +31,7 @@ app = FastAPI(title=settings.app_name)
 app.include_router(projects_router)
 app.include_router(rooms_router)
 app.include_router(lighting_groups_router)
+app.include_router(mechanisms_router)
 app.include_router(standards_router)
 app.include_router(lighting_validation_router)
 app.include_router(ets_csv_v1_router)
