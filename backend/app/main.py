@@ -5,23 +5,23 @@ from app.api.projects import router as projects_router
 from app.api.rooms import router as rooms_router
 from app.api.lighting_groups import router as lighting_groups_router
 from app.api.mechanisms import router as mechanisms_router
+from app.api.fans import router as fans_router
 from app.api.floor_heating import router as floor_heating_router
 from app.api.climate import router as climate_router
-from app.api.fans import router as fans_router
 
 from app.api.mechanism_validation import router as mechanism_validation_router
+from app.api.fan_validation import router as fan_validation_router
 from app.api.floor_heating_validation import router as floor_heating_validation_router
 from app.api.climate_validation import router as climate_validation_router
-from app.api.fan_validation import router as fan_validation_router
 
 from app.api.ets_central_functions_v1 import router as ets_central_functions_v1_router
 from app.api.ets_rooms_v1 import router as ets_rooms_v1_router
 from app.api.ets_csv_v1 import router as ets_csv_v1_router
 from app.api.ets_mechanisms_v1 import router as ets_mechanisms_v1_router
 from app.api.ets_mechanisms_v1_download import router as ets_mechanisms_v1_download_router
+from app.api.ets_fans_v1 import router as ets_fans_v1_router
 from app.api.ets_floor_heating_v1 import router as ets_floor_heating_v1_router
 from app.api.ets_climate_v1 import router as ets_climate_v1_router
-from app.api.ets_fans_v1 import router as ets_fans_v1_router
 
 # Service/internal routers.
 # Они остаются в backend, но скрыты из Swagger UI.
@@ -48,17 +48,17 @@ tags_metadata = [
     {"name": "rooms", "description": "Экспликация помещений"},
     {"name": "lighting-groups", "description": "Освещение"},
     {"name": "mechanisms", "description": "Механизмы / шторы"},
+    {"name": "fans", "description": "Вытяжные вентиляторы"},
     {"name": "floor-heating", "description": "Теплый пол"},
     {"name": "climate", "description": "Климат"},
-    {"name": "fans", "description": "Вытяжные вентиляторы"},
 
     {"name": "central-functions-ets-csv-v1", "description": "ETS CSV: 0/0 Центральные функции"},
     {"name": "rooms-ets-csv-v1", "description": "ETS CSV: 0/1 Помещения"},
     {"name": "ets-csv-v1", "description": "ETS CSV: 1 Освещение"},
     {"name": "mechanisms-ets-csv-v1", "description": "ETS CSV: 2 Механизмы"},
+    {"name": "fans-ets-csv-v1", "description": "ETS CSV: 8 Вытяжные вентиляторы"},
     {"name": "floor-heating-ets-csv-v1", "description": "ETS CSV: 3 Теплый пол"},
     {"name": "climate-ets-csv-v1", "description": "ETS CSV: 5 Климат контроль"},
-    {"name": "fans-ets-csv-v1", "description": "ETS CSV: 8 Вытяжные вентиляторы"},
 ]
 
 
@@ -72,15 +72,15 @@ app.include_router(projects_router)
 app.include_router(rooms_router)
 app.include_router(lighting_groups_router)
 app.include_router(mechanisms_router)
+app.include_router(fans_router)
 app.include_router(floor_heating_router)
 app.include_router(climate_router)
-app.include_router(fans_router)
 
 # 2. Validation endpoints
 app.include_router(mechanism_validation_router)
+app.include_router(fan_validation_router)
 app.include_router(floor_heating_validation_router)
 app.include_router(climate_validation_router)
-app.include_router(fan_validation_router)
 
 # 3. ETS CSV exports
 app.include_router(ets_central_functions_v1_router)
@@ -88,9 +88,9 @@ app.include_router(ets_rooms_v1_router)
 app.include_router(ets_csv_v1_router)
 app.include_router(ets_mechanisms_v1_router)
 app.include_router(ets_mechanisms_v1_download_router)
+app.include_router(ets_fans_v1_router)
 app.include_router(ets_floor_heating_v1_router)
 app.include_router(ets_climate_v1_router)
-app.include_router(ets_fans_v1_router)
 
 # Hidden service/internal API
 app.include_router(standards_router, include_in_schema=False)
