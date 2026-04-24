@@ -15,6 +15,7 @@ class Project(Base):
     mechanisms = relationship("Mechanism", back_populates="project", cascade="all, delete-orphan")
     floor_heating = relationship("FloorHeating", back_populates="project", cascade="all, delete-orphan")
     climate = relationship("Climate", back_populates="project", cascade="all, delete-orphan")
+    fans = relationship("Fan", back_populates="project", cascade="all, delete-orphan")
 
     # Legacy/internal relationships.
     # Нужны, потому что старые модели export_jobs/export_files еще подключены в backend.
