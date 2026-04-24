@@ -9,8 +9,11 @@ class Project(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    code: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
 
     rooms = relationship("Room", back_populates="project", cascade="all, delete-orphan")
     lighting_groups = relationship("LightingGroup", back_populates="project", cascade="all, delete-orphan")
+    mechanisms = relationship("Mechanism", back_populates="project", cascade="all, delete-orphan")
+
+    # Legacy/internal relationships.
+    # Нужны, потому что старые модели export_jobs/export_files еще подключены в backend.
     export_jobs = relationship("ExportJob", back_populates="project", cascade="all, delete-orphan")

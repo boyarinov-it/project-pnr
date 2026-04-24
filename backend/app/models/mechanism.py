@@ -21,4 +21,4 @@ class Mechanism(Base):
     device_channel: Mapped[str | None] = mapped_column(String(100), nullable=True)
 
     room = relationship("Room")
-    project = relationship("Project")
+    project = relationship("Project", back_populates="mechanisms")

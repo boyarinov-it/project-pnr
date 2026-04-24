@@ -5,6 +5,7 @@ from app.api.projects import router as projects_router
 from app.api.rooms import router as rooms_router
 from app.api.lighting_groups import router as lighting_groups_router
 from app.api.mechanisms import router as mechanisms_router
+from app.api.mechanism_validation import router as mechanism_validation_router
 
 from app.api.standards import router as standards_router
 from app.api.lighting_validation import router as lighting_validation_router
@@ -32,6 +33,7 @@ app.include_router(projects_router)
 app.include_router(rooms_router)
 app.include_router(lighting_groups_router)
 app.include_router(mechanisms_router)
+app.include_router(mechanism_validation_router)
 app.include_router(standards_router)
 app.include_router(lighting_validation_router)
 app.include_router(ets_csv_v1_router)
