@@ -70,3 +70,20 @@ def list_rooms(project_id: int, db: Session = Depends(get_db)):
         .order_by(Room.room_number.asc(), Room.id.asc())
         .all()
     )
+
+
+@router.get("/projects/{project_id}/rooms/by-number/{room_number}", response_model=RoomRead)
+def get_room_by_number(project_id: int, room_number: str, db: Session = Depends(get_db)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    room = (
+        db.query(Room)
+        .filter(Room.project_id == project_id, Room.room_number == room_number)
+        .first()
+    )
+    if not room:
+        raise HTTPException(status_code=404, detail="Room with given room_number not found")
+
+    return room
