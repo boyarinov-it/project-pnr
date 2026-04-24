@@ -7,6 +7,7 @@ from app.api.lighting_groups import router as lighting_groups_router
 from app.api.mechanisms import router as mechanisms_router
 from app.api.floor_heating import router as floor_heating_router
 from app.api.floor_heating_validation import router as floor_heating_validation_router
+from app.api.ets_floor_heating_v1 import router as ets_floor_heating_v1_router
 from app.api.ets_mechanisms_v1 import router as ets_mechanisms_v1_router
 from app.api.ets_mechanisms_v1_download import router as ets_mechanisms_v1_download_router
 from app.api.mechanism_validation import router as mechanism_validation_router
@@ -39,6 +40,7 @@ app.include_router(lighting_groups_router)
 app.include_router(mechanisms_router)
 app.include_router(floor_heating_router)
 app.include_router(floor_heating_validation_router)
+app.include_router(ets_floor_heating_v1_router)
 app.include_router(ets_mechanisms_v1_router)
 app.include_router(ets_mechanisms_v1_download_router)
 app.include_router(mechanism_validation_router)
@@ -67,6 +69,7 @@ def health_db():
     with engine.connect() as connection:
         connection.execute(text("SELECT 1"))
     return {"status": "ok", "database": "connected"}
+
 
 
 
