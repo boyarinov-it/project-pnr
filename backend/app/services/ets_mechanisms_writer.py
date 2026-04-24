@@ -69,6 +69,7 @@ def build_mechanisms_ets_csv(project) -> str:
             if function["label"] == "Резерв":
                 rows.append(f" , ,Резерв,{address},,,,,Auto")
             else:
-                rows.append(f" , ,{object_name},{address},,,,{description},{dpt},Auto")
+                rows.append(f" , ,{object_name},{address},,,{description},{dpt},Auto")
 
     return "\r\n".join(rows) + "\r\n"
+
