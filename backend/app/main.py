@@ -7,18 +7,18 @@ from app.api.lighting_groups import router as lighting_groups_router
 from app.api.mechanisms import router as mechanisms_router
 from app.api.floor_heating import router as floor_heating_router
 from app.api.climate import router as climate_router
-from app.api.climate_validation import router as climate_validation_router
-from app.api.ets_climate_v1 import router as ets_climate_v1_router
-from app.api.ets_rooms_v1 import router as ets_rooms_v1_router
-from app.api.ets_central_functions_v1 import router as ets_central_functions_v1_router
 
 from app.api.mechanism_validation import router as mechanism_validation_router
 from app.api.floor_heating_validation import router as floor_heating_validation_router
+from app.api.climate_validation import router as climate_validation_router
 
+from app.api.ets_central_functions_v1 import router as ets_central_functions_v1_router
+from app.api.ets_rooms_v1 import router as ets_rooms_v1_router
 from app.api.ets_csv_v1 import router as ets_csv_v1_router
 from app.api.ets_mechanisms_v1 import router as ets_mechanisms_v1_router
 from app.api.ets_mechanisms_v1_download import router as ets_mechanisms_v1_download_router
 from app.api.ets_floor_heating_v1 import router as ets_floor_heating_v1_router
+from app.api.ets_climate_v1 import router as ets_climate_v1_router
 
 # Service/internal routers.
 # Они остаются в backend, но скрыты из Swagger UI.
@@ -40,27 +40,50 @@ from app.core.config import settings
 from app.db.session import engine
 
 
-app = FastAPI(title=settings.app_name)
+tags_metadata = [
+    {"name": "projects", "description": "Проекты"},
+    {"name": "rooms", "description": "Экспликация помещений"},
+    {"name": "lighting-groups", "description": "Освещение"},
+    {"name": "mechanisms", "description": "Механизмы / шторы"},
+    {"name": "floor-heating", "description": "Теплый пол"},
+    {"name": "climate", "description": "Климат"},
+    {"name": "central-functions-ets-csv-v1", "description": "ETS CSV: 0/0 Центральные функции"},
+    {"name": "rooms-ets-csv-v1", "description": "ETS CSV: 0/1 Помещения"},
+    {"name": "ets-csv-v1", "description": "ETS CSV: 1 Освещение"},
+    {"name": "mechanisms-ets-csv-v1", "description": "ETS CSV: 2 Механизмы"},
+    {"name": "floor-heating-ets-csv-v1", "description": "ETS CSV: 3 Теплый пол"},
+    {"name": "climate-ets-csv-v1", "description": "ETS CSV: 5 Климат контроль"},
+]
 
-# Visible MVP API
+
+app = FastAPI(
+    title=settings.app_name,
+    openapi_tags=tags_metadata,
+)
+
+# 1. Main project data
 app.include_router(projects_router)
 app.include_router(rooms_router)
 app.include_router(lighting_groups_router)
 app.include_router(mechanisms_router)
 app.include_router(floor_heating_router)
 app.include_router(climate_router)
-app.include_router(climate_validation_router)
-app.include_router(ets_climate_v1_router)
-app.include_router(ets_rooms_v1_router)
-app.include_router(ets_central_functions_v1_router)
 
+# 2. Validation endpoints
+# Они отображаются внутри своих основных блоков:
+# mechanisms / floor-heating / climate.
 app.include_router(mechanism_validation_router)
 app.include_router(floor_heating_validation_router)
+app.include_router(climate_validation_router)
 
+# 3. ETS CSV exports
+app.include_router(ets_central_functions_v1_router)
+app.include_router(ets_rooms_v1_router)
 app.include_router(ets_csv_v1_router)
 app.include_router(ets_mechanisms_v1_router)
 app.include_router(ets_mechanisms_v1_download_router)
 app.include_router(ets_floor_heating_v1_router)
+app.include_router(ets_climate_v1_router)
 
 # Hidden service/internal API
 app.include_router(standards_router, include_in_schema=False)
@@ -86,9 +109,5 @@ def health():
 def health_db():
     with engine.connect() as connection:
         connection.execute(text("SELECT 1"))
+
     return {"status": "ok", "database": "connected"}
-
-
-
-
-
