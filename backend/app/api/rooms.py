@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_db
 from app.models.project import Project
 from app.models.room import Room
-from app.schemas.room import RoomCreate, RoomRead
+from app.schemas.room import RoomCreate, RoomRead, RoomUpdate
 
 router = APIRouter(tags=["rooms"])
 
@@ -36,6 +36,28 @@ def create_room(project_id: int, payload: RoomCreate, db: Session = Depends(get_
     return room
 
 
+@router.put("/rooms/{room_id}", response_model=RoomRead)
+def update_room(room_id: int, payload: RoomUpdate, db: Session = Depends(get_db)):
+    room = db.query(Room).filter(Room.id == room_id).first()
+    if not room:
+        raise HTTPException(status_code=404, detail="Room not found")
+
+    room.room_number = payload.room_number
+    room.name = payload.name
+    room.code = payload.code
+    room.name_ru = payload.name_ru
+    room.name_en = payload.name_en
+
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Room number must be unique within project")
+
+    db.refresh(room)
+    return room
+
+
 @router.get("/projects/{project_id}/rooms", response_model=list[RoomRead])
 def list_rooms(project_id: int, db: Session = Depends(get_db)):
     project = db.query(Project).filter(Project.id == project_id).first()
@@ -45,6 +67,6 @@ def list_rooms(project_id: int, db: Session = Depends(get_db)):
     return (
         db.query(Room)
         .filter(Room.project_id == project_id)
-        .order_by(Room.id.asc())
+        .order_by(Room.room_number.asc(), Room.id.asc())
         .all()
     )
