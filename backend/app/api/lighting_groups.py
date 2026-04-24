@@ -1,28 +1,48 @@
-﻿from fastapi import APIRouter, Depends, HTTPException
+﻿from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.models.project import Project
-from app.models.room import Room
 from app.models.lighting_group import LightingGroup
+from app.models.room import Room
 from app.schemas.lighting_group import LightingGroupCreate, LightingGroupRead
+from app.services.explication_resolver import get_project_or_404, get_room_by_number_or_404
 
 router = APIRouter(tags=["lighting-groups"])
 
 
+def build_room_name(room: Room) -> str:
+    return room.name_ru or room.name or room.code
+
+
+def build_lighting_display_name(room: Room, group: LightingGroup) -> str:
+    return f"{build_room_name(room)} - {group.name}"
+
+
+def build_lighting_group_read(group: LightingGroup) -> LightingGroupRead:
+    room = group.room
+
+    return LightingGroupRead(
+        id=group.id,
+        project_id=group.project_id,
+        room_id=group.room_id,
+        room_number=room.room_number,
+        room_name=build_room_name(room),
+        display_name=build_lighting_display_name(room, group),
+        name=group.name,
+        code=group.code,
+        load_type=group.load_type,
+        quantity=group.quantity,
+        device_type=group.device_type,
+        device_address=group.device_address,
+        device_output=group.device_output,
+        dimmer_channel=group.dimmer_channel,
+    )
+
+
 @router.post("/projects/{project_id}/lighting-groups", response_model=LightingGroupRead)
 def create_lighting_group(project_id: int, payload: LightingGroupCreate, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-
-    room = (
-        db.query(Room)
-        .filter(Room.project_id == project_id, Room.room_number == payload.room_number)
-        .first()
-    )
-    if not room:
-        raise HTTPException(status_code=404, detail="Room with given room_number not found")
+    get_project_or_404(db, project_id)
+    room = get_room_by_number_or_404(db, project_id, payload.room_number)
 
     group = LightingGroup(
         project_id=project_id,
@@ -40,29 +60,12 @@ def create_lighting_group(project_id: int, payload: LightingGroupCreate, db: Ses
     db.commit()
     db.refresh(group)
 
-    return LightingGroupRead(
-        id=group.id,
-        project_id=group.project_id,
-        room_id=group.room_id,
-        room_number=room.room_number,
-        room_name=room.name_ru or room.name,
-        name=group.name,
-        code=group.code,
-        load_type=group.load_type,
-        quantity=group.quantity,
-        device_type=group.device_type,
-        device_address=group.device_address,
-        device_output=group.device_output,
-        dimmer_channel=group.dimmer_channel,
-        display_name=f"{room.room_number}.{room.name_ru or room.name}-{group.name}",
-    )
+    return build_lighting_group_read(group)
 
 
 @router.get("/projects/{project_id}/lighting-groups", response_model=list[LightingGroupRead])
 def list_lighting_groups(project_id: int, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
+    get_project_or_404(db, project_id)
 
     groups = (
         db.query(LightingGroup)
@@ -72,69 +75,4 @@ def list_lighting_groups(project_id: int, db: Session = Depends(get_db)):
         .all()
     )
 
-    result = []
-    for group in groups:
-        room = group.room
-        result.append(
-            LightingGroupRead(
-                id=group.id,
-                project_id=group.project_id,
-                room_id=group.room_id,
-                room_number=room.room_number,
-                room_name=room.name_ru or room.name,
-                name=group.name,
-                code=group.code,
-                load_type=group.load_type,
-                quantity=group.quantity,
-                device_type=group.device_type,
-                device_address=group.device_address,
-                device_output=group.device_output,
-                dimmer_channel=group.dimmer_channel,
-                display_name=f"{room.room_number}.{room.name_ru or room.name}-{group.name}",
-            )
-        )
-@router.get("/projects/{project_id}/lighting-groups/{group_id}/knx-preview")
-def get_lighting_group_knx_preview(project_id: int, group_id: int, db: Session = Depends(get_db)):
-    group = (
-        db.query(LightingGroup)
-        .join(Room, LightingGroup.room_id == Room.id)
-        .filter(LightingGroup.project_id == project_id, LightingGroup.id == group_id)
-        .first()
-    )
-
-    if not group:
-        raise HTTPException(status_code=404, detail="Lighting group not found")
-
-    room = group.room
-    room_name = room.name_ru or room.name
-    base_name = f"{room.room_number}.{room_name}-{group.name}"
-
-    return [
-        {
-            "function": "Вкл",
-            "name": f"_{room.room_number}__Вкл_{base_name}",
-            "dpt": "DPST-1-1",
-        },
-        {
-            "function": "Димм",
-            "name": f"_{room.room_number}__Димм_{base_name}",
-            "dpt": "DPST-3-7",
-        },
-        {
-            "function": "Яркость%",
-            "name": f"_{room.room_number}__Яркость%_{base_name}",
-            "dpt": "DPST-5-1",
-        },
-        {
-            "function": "Статус",
-            "name": f"_{room.room_number}__Статус_{base_name}",
-            "dpt": "DPST-1-1",
-        },
-        {
-            "function": "Статус%",
-            "name": f"_{room.room_number}__Статус%_{base_name}",
-            "dpt": "DPST-5-1",
-        },
-    ]
-    return result
-
+    return [build_lighting_group_read(group) for group in groups]

@@ -1,4 +1,4 @@
-﻿from pydantic import BaseModel
+﻿from pydantic import BaseModel, ConfigDict
 
 
 class LightingGroupCreate(BaseModel):
@@ -7,9 +7,9 @@ class LightingGroupCreate(BaseModel):
     code: str
     load_type: str
     quantity: int
-    device_type: str
-    device_address: str
-    device_output: str
+    device_type: str | None = None
+    device_address: str | None = None
+    device_output: str | None = None
     dimmer_channel: str | None = None
 
 
@@ -19,12 +19,14 @@ class LightingGroupRead(BaseModel):
     room_id: int
     room_number: str
     room_name: str
+    display_name: str
     name: str
     code: str
     load_type: str
     quantity: int
-    device_type: str
-    device_address: str
-    device_output: str
+    device_type: str | None = None
+    device_address: str | None = None
+    device_output: str | None = None
     dimmer_channel: str | None = None
-    display_name: str
+
+    model_config = ConfigDict(from_attributes=True)
