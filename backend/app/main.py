@@ -8,6 +8,7 @@ from app.api.mechanisms import router as mechanisms_router
 from app.api.floor_heating import router as floor_heating_router
 from app.api.climate import router as climate_router
 from app.api.fans import router as fans_router
+from app.api.fan_validation import router as fan_validation_router
 
 from app.api.mechanism_validation import router as mechanism_validation_router
 from app.api.floor_heating_validation import router as floor_heating_validation_router
@@ -70,6 +71,7 @@ app.include_router(mechanisms_router)
 app.include_router(floor_heating_router)
 app.include_router(climate_router)
 app.include_router(fans_router)
+app.include_router(fan_validation_router)
 
 # 2. Validation endpoints
 # Они отображаются внутри своих основных блоков:
@@ -113,4 +115,5 @@ def health_db():
         connection.execute(text("SELECT 1"))
 
     return {"status": "ok", "database": "connected"}
+
 
