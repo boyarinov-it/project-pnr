@@ -171,15 +171,83 @@
                 </table>
             </section>
         </section>
-
-        <section class="tab-panel" id="tab-mechanisms">
+                <section class="tab-panel" id="tab-mechanisms">
             <section class="card">
-                <h2>Механизмы</h2>
-                <p class="muted">Следующим шагом добавим форму механизмов / штор.</p>
+                <h2>Механизмы / шторы</h2>
+
+                <input id="mechanismIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        № помещения
+                        <input id="mechanismRoomNumberInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название механизма
+                        <input id="mechanismNameInput" type="text" placeholder="Левая штора" />
+                    </label>
+
+                    <label>
+                        Код
+                        <input id="mechanismCodeInput" type="text" placeholder="M1" />
+                    </label>
+
+                    <label>
+                        Тип механизма
+                        <select id="mechanismTypeInput">
+                            <option value="SHUTTER">SHUTTER</option>
+                            <option value="CURTAIN">CURTAIN</option>
+                            <option value="JALOUSIE">JALOUSIE</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Количество
+                        <input id="mechanismQuantityInput" type="number" min="1" value="1" />
+                    </label>
+
+                    <label>
+                        Тип устройства
+                        <input id="mechanismDeviceTypeInput" type="text" placeholder="SHUTTER_ACTUATOR" />
+                    </label>
+
+                    <label>
+                        Адрес устройства
+                        <input id="mechanismDeviceAddressInput" type="text" placeholder="1.1.20" />
+                    </label>
+
+                    <label>
+                        Канал
+                        <input id="mechanismDeviceChannelInput" type="text" placeholder="A1" />
+                    </label>
+                </div>
+
+                <div class="row">
+                    <button id="saveMechanismButton">Добавить механизм</button>
+                    <button id="clearMechanismFormButton" class="secondary">Очистить</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Помещение</th>
+                            <th>Название</th>
+                            <th>Код</th>
+                            <th>Тип</th>
+                            <th>Кол-во</th>
+                            <th>Устройство</th>
+                            <th>Адрес</th>
+                            <th>Канал</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="mechanismsTableBody"></tbody>
+                </table>
             </section>
         </section>
-
-        <section class="tab-panel" id="tab-fans">
+<section class="tab-panel" id="tab-fans">
             <section class="card">
                 <h2>Вытяжные вентиляторы</h2>
                 <p class="muted">Следующим шагом добавим форму вентиляторов.</p>
@@ -223,5 +291,8 @@
     </div>
 
     <script src="/app.js"></script>
+    <script src="/mechanisms.js"></script>
 </body>
 </html>
+
+
