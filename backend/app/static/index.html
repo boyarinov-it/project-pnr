@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Project PNR</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div>
+                <h1>Project PNR</h1>
+                <p>Генератор групповых адресов ETS</p>
+            </div>
+            <button id="reloadButton">Обновить</button>
+        </header>
+
+        <section class="card">
+            <h2>Проект</h2>
+
+            <div class="row">
+                <input id="projectNameInput" type="text" placeholder="Название проекта" />
+                <button id="createProjectButton">Создать проект</button>
+            </div>
+
+            <div class="row">
+                <label for="projectSelect">Активный проект:</label>
+                <select id="projectSelect"></select>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Экспликация помещений</h2>
+
+            <input id="roomIdInput" type="hidden" />
+
+            <div class="grid">
+                <label>
+                    Номер помещения
+                    <input id="roomNumberInput" type="text" placeholder="1" />
+                </label>
+
+                <label>
+                    Название RU
+                    <input id="roomNameRuInput" type="text" placeholder="Гостиная" />
+                </label>
+
+                <label>
+                    Название EN
+                    <input id="roomNameEnInput" type="text" placeholder="Living room" />
+                </label>
+
+                <label>
+                    Код
+                    <input id="roomCodeInput" type="text" placeholder="LIVING" />
+                </label>
+            </div>
+
+            <div class="row">
+                <button id="saveRoomButton">Добавить помещение</button>
+                <button id="clearRoomFormButton" class="secondary">Очистить</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Номер</th>
+                        <th>Название RU</th>
+                        <th>Название EN</th>
+                        <th>Код</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="roomsTableBody"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>Выгрузки ETS CSV</h2>
+
+            <div class="exports">
+                <button data-export="central-functions">0/0 Центральные функции</button>
+                <button data-export="rooms">0/1 Помещения</button>
+                <button data-export="lighting">1 Освещение</button>
+                <button data-export="mechanisms">2 Механизмы</button>
+                <button data-export="floor-heating">3 Теплый пол</button>
+                <button data-export="climate">5 Климат контроль</button>
+                <button data-export="fans">8 Вытяжные вентиляторы</button>
+            </div>
+        </section>
+
+        <section class="card log-card">
+            <h2>Журнал</h2>
+            <pre id="logOutput"></pre>
+        </section>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

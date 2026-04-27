@@ -1,4 +1,5 @@
 ﻿from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
 from app.api.projects import router as projects_router
@@ -118,3 +119,5 @@ def health_db():
         connection.execute(text("SELECT 1"))
 
     return {"status": "ok", "database": "connected"}
+# Frontend MVP
+app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
