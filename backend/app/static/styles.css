@@ -10,7 +10,7 @@ body {
 }
 
 .page {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 24px;
 }
@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .header h1 {
@@ -30,6 +30,35 @@ body {
 .header p {
     margin: 6px 0 0;
     color: #667085;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.tab-button {
+    background: #e2e8f0;
+    color: #1f2937;
+}
+
+.tab-button:hover {
+    background: #cbd5e1;
+}
+
+.tab-button.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
 }
 
 .card {
@@ -100,6 +129,14 @@ button.secondary:hover {
     background: #475569;
 }
 
+button.danger {
+    background: #dc2626;
+}
+
+button.danger:hover {
+    background: #b91c1c;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -112,11 +149,17 @@ td {
     padding: 10px;
     text-align: left;
     font-size: 14px;
+    vertical-align: middle;
 }
 
 th {
     background: #f8fafc;
     color: #475467;
+}
+
+.table-actions {
+    display: flex;
+    gap: 8px;
 }
 
 .exports {
@@ -144,7 +187,11 @@ th {
     white-space: pre-wrap;
 }
 
-@media (max-width: 900px) {
+.muted {
+    color: #667085;
+}
+
+@media (max-width: 1000px) {
     .grid,
     .exports {
         grid-template-columns: 1fr;
@@ -153,5 +200,9 @@ th {
     .row {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .table-actions {
+        flex-direction: column;
     }
 }

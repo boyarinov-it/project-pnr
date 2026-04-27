@@ -15,79 +15,205 @@
             <button id="reloadButton">Обновить</button>
         </header>
 
-        <section class="card">
-            <h2>Проект</h2>
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="project">Проект</button>
+            <button class="tab-button" data-tab="rooms">Экспликация</button>
+            <button class="tab-button" data-tab="lighting">Освещение</button>
+            <button class="tab-button" data-tab="mechanisms">Механизмы</button>
+            <button class="tab-button" data-tab="fans">Вентиляторы</button>
+            <button class="tab-button" data-tab="floor-heating">Теплый пол</button>
+            <button class="tab-button" data-tab="climate">Климат</button>
+            <button class="tab-button" data-tab="exports">Выгрузки</button>
+        </nav>
 
-            <div class="row">
-                <input id="projectNameInput" type="text" placeholder="Название проекта" />
-                <button id="createProjectButton">Создать проект</button>
-            </div>
+        <section class="tab-panel active" id="tab-project">
+            <section class="card">
+                <h2>Проект</h2>
 
-            <div class="row">
-                <label for="projectSelect">Активный проект:</label>
-                <select id="projectSelect"></select>
-            </div>
+                <div class="row">
+                    <input id="projectNameInput" type="text" placeholder="Название проекта" />
+                    <button id="createProjectButton">Создать проект</button>
+                </div>
+
+                <div class="row">
+                    <label for="projectSelect">Активный проект:</label>
+                    <select id="projectSelect"></select>
+                </div>
+            </section>
         </section>
 
-        <section class="card">
-            <h2>Экспликация помещений</h2>
+        <section class="tab-panel" id="tab-rooms">
+            <section class="card">
+                <h2>Экспликация помещений</h2>
 
-            <input id="roomIdInput" type="hidden" />
+                <input id="roomIdInput" type="hidden" />
 
-            <div class="grid">
-                <label>
-                    Номер помещения
-                    <input id="roomNumberInput" type="text" placeholder="1" />
-                </label>
+                <div class="grid">
+                    <label>
+                        Номер помещения
+                        <input id="roomNumberInput" type="text" placeholder="1" />
+                    </label>
 
-                <label>
-                    Название RU
-                    <input id="roomNameRuInput" type="text" placeholder="Гостиная" />
-                </label>
+                    <label>
+                        Название RU
+                        <input id="roomNameRuInput" type="text" placeholder="Гостиная" />
+                    </label>
 
-                <label>
-                    Название EN
-                    <input id="roomNameEnInput" type="text" placeholder="Living room" />
-                </label>
+                    <label>
+                        Название EN
+                        <input id="roomNameEnInput" type="text" placeholder="Living room" />
+                    </label>
 
-                <label>
-                    Код
-                    <input id="roomCodeInput" type="text" placeholder="LIVING" />
-                </label>
-            </div>
+                    <label>
+                        Код
+                        <input id="roomCodeInput" type="text" placeholder="LIVING" />
+                    </label>
+                </div>
 
-            <div class="row">
-                <button id="saveRoomButton">Добавить помещение</button>
-                <button id="clearRoomFormButton" class="secondary">Очистить</button>
-            </div>
+                <div class="row">
+                    <button id="saveRoomButton">Добавить помещение</button>
+                    <button id="clearRoomFormButton" class="secondary">Очистить</button>
+                </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Номер</th>
-                        <th>Название RU</th>
-                        <th>Название EN</th>
-                        <th>Код</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="roomsTableBody"></tbody>
-            </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Номер</th>
+                            <th>Название RU</th>
+                            <th>Название EN</th>
+                            <th>Код</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="roomsTableBody"></tbody>
+                </table>
+            </section>
         </section>
 
-        <section class="card">
-            <h2>Выгрузки ETS CSV</h2>
+        <section class="tab-panel" id="tab-lighting">
+            <section class="card">
+                <h2>Освещение</h2>
 
-            <div class="exports">
-                <button data-export="central-functions">0/0 Центральные функции</button>
-                <button data-export="rooms">0/1 Помещения</button>
-                <button data-export="lighting">1 Освещение</button>
-                <button data-export="mechanisms">2 Механизмы</button>
-                <button data-export="floor-heating">3 Теплый пол</button>
-                <button data-export="climate">5 Климат контроль</button>
-                <button data-export="fans">8 Вытяжные вентиляторы</button>
-            </div>
+                <input id="lightingIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        № помещения
+                        <input id="lightingRoomNumberInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название группы
+                        <input id="lightingNameInput" type="text" placeholder="Споты" />
+                    </label>
+
+                    <label>
+                        Код
+                        <input id="lightingCodeInput" type="text" placeholder="10" />
+                    </label>
+
+                    <label>
+                        Тип нагрузки
+                        <select id="lightingLoadTypeInput">
+                            <option value="RELAY">RELAY</option>
+                            <option value="DIM">DIM</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Количество
+                        <input id="lightingQuantityInput" type="number" min="1" value="1" />
+                    </label>
+
+                    <label>
+                        Тип устройства
+                        <input id="lightingDeviceTypeInput" type="text" placeholder="RELAY / DALI" />
+                    </label>
+
+                    <label>
+                        Адрес устройства
+                        <input id="lightingDeviceAddressInput" type="text" placeholder="1.1.1" />
+                    </label>
+
+                    <label>
+                        Выход
+                        <input id="lightingDeviceOutputInput" type="text" placeholder="A1 / 1" />
+                    </label>
+
+                    <label>
+                        Канал диммера
+                        <input id="lightingDimmerChannelInput" type="number" min="1" placeholder="2" />
+                    </label>
+                </div>
+
+                <div class="row">
+                    <button id="saveLightingButton">Добавить группу света</button>
+                    <button id="clearLightingFormButton" class="secondary">Очистить</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Помещение</th>
+                            <th>Название</th>
+                            <th>Код</th>
+                            <th>Тип</th>
+                            <th>Кол-во</th>
+                            <th>Устройство</th>
+                            <th>Адрес</th>
+                            <th>Выход</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="lightingTableBody"></tbody>
+                </table>
+            </section>
+        </section>
+
+        <section class="tab-panel" id="tab-mechanisms">
+            <section class="card">
+                <h2>Механизмы</h2>
+                <p class="muted">Следующим шагом добавим форму механизмов / штор.</p>
+            </section>
+        </section>
+
+        <section class="tab-panel" id="tab-fans">
+            <section class="card">
+                <h2>Вытяжные вентиляторы</h2>
+                <p class="muted">Следующим шагом добавим форму вентиляторов.</p>
+            </section>
+        </section>
+
+        <section class="tab-panel" id="tab-floor-heating">
+            <section class="card">
+                <h2>Теплый пол</h2>
+                <p class="muted">Следующим шагом добавим форму теплого пола.</p>
+            </section>
+        </section>
+
+        <section class="tab-panel" id="tab-climate">
+            <section class="card">
+                <h2>Климат</h2>
+                <p class="muted">Следующим шагом добавим форму климата.</p>
+            </section>
+        </section>
+
+        <section class="tab-panel" id="tab-exports">
+            <section class="card">
+                <h2>Выгрузки ETS CSV</h2>
+
+                <div class="exports">
+                    <button data-export="central-functions">0/0 Центральные функции</button>
+                    <button data-export="rooms">0/1 Помещения</button>
+                    <button data-export="lighting">1 Освещение</button>
+                    <button data-export="mechanisms">2 Механизмы</button>
+                    <button data-export="floor-heating">3 Теплый пол</button>
+                    <button data-export="climate">5 Климат контроль</button>
+                    <button data-export="fans">8 Вытяжные вентиляторы</button>
+                </div>
+            </section>
         </section>
 
         <section class="card log-card">
