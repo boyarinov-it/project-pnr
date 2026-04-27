@@ -137,6 +137,8 @@ async function loadRooms() {
 
     state.rooms = await requestJson(`${api}/projects/${state.activeProjectId}/rooms`);
     renderRooms();
+    updateRoomNumberSelects();
+    updateRoomNumberDatalist();
 }
 
 function renderRooms() {
@@ -459,9 +461,66 @@ function bindEvents() {
 
 async function init() {
     await loadProjects();
+    updateRoomNumberSelects();
     log("Интерфейс загружен");
 }
 
+attachRoomNumberDatalists();
 bindEvents();
 init().catch((error) => log(error.message));
 
+
+function attachRoomNumberDatalists() {
+    // Больше не используем datalist.
+    // Поля помещений переведены на обычные select.
+}
+
+function updateRoomNumberDatalist() {
+    // Больше не используем datalist.
+    // Поля помещений переведены на обычные select.
+}
+
+
+function updateRoomNumberSelects() {
+    const selectIds = [
+        "lightingRoomNumberInput",
+        "mechanismRoomNumberInput",
+        "fanRoomNumberInput",
+        "floorHeatingRoomNumberInput",
+        "climateRoomNumberInput"
+    ];
+
+    for (const selectId of selectIds) {
+        const select = document.getElementById(selectId);
+
+        if (!select) {
+            continue;
+        }
+
+        const previousValue = select.value;
+        select.innerHTML = "";
+
+        const emptyOption = document.createElement("option");
+        emptyOption.value = "";
+        emptyOption.textContent = "Выберите помещение";
+        select.appendChild(emptyOption);
+
+        for (const room of state.rooms) {
+            const option = document.createElement("option");
+
+            const roomNumber = String(room.room_number ?? "");
+            const roomName = room.name_ru || room.name || room.code || "";
+
+            option.value = roomNumber;
+            option.textContent = roomName
+                ? `${roomNumber} — ${roomName}`
+                : roomNumber;
+
+            select.appendChild(option);
+        }
+
+        if (previousValue) {
+            select.value = previousValue;
+        }
+    }
+}
