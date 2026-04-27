@@ -247,10 +247,70 @@
                 </table>
             </section>
         </section>
-<section class="tab-panel" id="tab-fans">
+        <section class="tab-panel" id="tab-fans">
             <section class="card">
                 <h2>Вытяжные вентиляторы</h2>
-                <p class="muted">Следующим шагом добавим форму вентиляторов.</p>
+
+                <input id="fanIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        № помещения
+                        <input id="fanRoomNumberInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название вентилятора
+                        <input id="fanNameInput" type="text" placeholder="Вентилятор" />
+                    </label>
+
+                    <label>
+                        Код
+                        <input id="fanCodeInput" type="text" placeholder="В1" />
+                    </label>
+
+                    <label>
+                        Количество
+                        <input id="fanQuantityInput" type="number" min="1" value="1" />
+                    </label>
+
+                    <label>
+                        Тип устройства
+                        <input id="fanDeviceTypeInput" type="text" placeholder="RELAY" />
+                    </label>
+
+                    <label>
+                        Адрес устройства
+                        <input id="fanDeviceAddressInput" type="text" placeholder="1.1.50" />
+                    </label>
+
+                    <label>
+                        Канал
+                        <input id="fanDeviceChannelInput" type="text" placeholder="A1" />
+                    </label>
+                </div>
+
+                <div class="row">
+                    <button id="saveFanButton">Добавить вентилятор</button>
+                    <button id="clearFanFormButton" class="secondary">Очистить</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Помещение</th>
+                            <th>Название</th>
+                            <th>Код</th>
+                            <th>Кол-во</th>
+                            <th>Устройство</th>
+                            <th>Адрес</th>
+                            <th>Канал</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="fansTableBody"></tbody>
+                </table>
             </section>
         </section>
 
@@ -292,7 +352,9 @@
 
     <script src="/app.js"></script>
     <script src="/mechanisms.js"></script>
+    <script src="/fans.js"></script>
 </body>
 </html>
+
 
 
