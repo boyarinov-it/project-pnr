@@ -394,11 +394,21 @@ async function deleteLightingGroup(groupId) {
     await loadLightingGroups();
 }
 
-function downloadExport(type) {
+async function downloadExport(type) {
     if (!state.activeProjectId) {
         log("Сначала выберите проект");
         return;
     }
+
+    const exportLabels = {
+        "central-functions": "0/0 Центральные функции",
+        "rooms": "0/1 Помещения",
+        "lighting": "1 Освещение",
+        "mechanisms": "2 Механизмы",
+        "floor-heating": "3 Теплый пол",
+        "climate": "5 Климат контроль",
+        "fans": "8 Вытяжные вентиляторы",
+    };
 
     const urls = {
         "central-functions": `/projects/${state.activeProjectId}/central-functions-ets-csv-v1-download`,
@@ -410,15 +420,49 @@ function downloadExport(type) {
         "fans": `/projects/${state.activeProjectId}/fans-ets-csv-v1-download`,
     };
 
+    const label = exportLabels[type] || type;
     const url = urls[type];
 
     if (!url) {
-        log(`Неизвестный экспорт: ${type}`);
+        log(`Неизвестная выгрузка: ${type}`);
         return;
     }
 
-    window.location.href = url;
-    log(`Скачивание: ${type}`);
+    try {
+        log(`Скачиваем: ${label}`);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`${response.status} ${response.statusText}: ${errorText}`);
+        }
+
+        const blob = await response.blob();
+        const contentDisposition = response.headers.get("content-disposition") || "";
+
+        let filename = `project_${state.activeProjectId}_${type}.csv`;
+
+        const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/i);
+        if (filenameMatch && filenameMatch[1]) {
+            filename = filenameMatch[1];
+        }
+
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = downloadUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+
+        log(`Файл скачан: ${filename}`);
+    } catch (error) {
+        log(`Ошибка выгрузки "${label}": ${error.message}`);
+    }
 }
 
 function bindEvents() {
