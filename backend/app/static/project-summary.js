@@ -5,6 +5,7 @@
 
     rooms: document.getElementById("summaryRoomsCount"),
     lighting: document.getElementById("summaryLightingCount"),
+    rgbwLighting: document.getElementById("summaryRgbwLightingCount"),
     mechanisms: document.getElementById("summaryMechanismsCount"),
     fans: document.getElementById("summaryFansCount"),
     floorHeating: document.getElementById("summaryFloorHeatingCount"),
@@ -16,38 +17,51 @@ function getActiveProjectIdForSummary() {
     return value ? Number(value) : null;
 }
 
+function setSummaryValue(element, value) {
+    if (element) {
+        element.textContent = value;
+    }
+}
+
 function setSummaryLoading() {
-    projectSummaryElements.rooms.textContent = "…";
-    projectSummaryElements.lighting.textContent = "…";
-    projectSummaryElements.mechanisms.textContent = "…";
-    projectSummaryElements.fans.textContent = "…";
-    projectSummaryElements.floorHeating.textContent = "…";
-    projectSummaryElements.climate.textContent = "…";
+    setSummaryValue(projectSummaryElements.rooms, "…");
+    setSummaryValue(projectSummaryElements.lighting, "…");
+    setSummaryValue(projectSummaryElements.rgbwLighting, "…");
+    setSummaryValue(projectSummaryElements.mechanisms, "…");
+    setSummaryValue(projectSummaryElements.fans, "…");
+    setSummaryValue(projectSummaryElements.floorHeating, "…");
+    setSummaryValue(projectSummaryElements.climate, "…");
 }
 
 function setSummaryEmpty() {
-    projectSummaryElements.rooms.textContent = "—";
-    projectSummaryElements.lighting.textContent = "—";
-    projectSummaryElements.mechanisms.textContent = "—";
-    projectSummaryElements.fans.textContent = "—";
-    projectSummaryElements.floorHeating.textContent = "—";
-    projectSummaryElements.climate.textContent = "—";
+    setSummaryValue(projectSummaryElements.rooms, "—");
+    setSummaryValue(projectSummaryElements.lighting, "—");
+    setSummaryValue(projectSummaryElements.rgbwLighting, "—");
+    setSummaryValue(projectSummaryElements.mechanisms, "—");
+    setSummaryValue(projectSummaryElements.fans, "—");
+    setSummaryValue(projectSummaryElements.floorHeating, "—");
+    setSummaryValue(projectSummaryElements.climate, "—");
 }
 
-async function fetchSummaryCount(url) {
+async function fetchJson(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+    return await response.json();
+}
 
-    if (Array.isArray(data)) {
-        return data.length;
-    }
+function isRgbwLightingGroup(item) {
+    const loadType = String(
+        item?.load_type ||
+        item?.loadType ||
+        item?.type ||
+        ""
+    ).trim().toUpperCase();
 
-    return 0;
+    return loadType === "RGBW";
 }
 
 async function refreshProjectSummary() {
@@ -69,38 +83,33 @@ async function refreshProjectSummary() {
         projectSummaryElements.status.textContent = "Обновляем сводку...";
     }
 
-    const endpoints = {
-        rooms: `/projects/${projectId}/rooms`,
-        lighting: `/projects/${projectId}/lighting-groups`,
-        mechanisms: `/projects/${projectId}/mechanisms`,
-        fans: `/projects/${projectId}/fans`,
-        floorHeating: `/projects/${projectId}/floor-heating`,
-        climate: `/projects/${projectId}/climate`,
-    };
-
     try {
         const [
-            roomsCount,
-            lightingCount,
-            mechanismsCount,
-            fansCount,
-            floorHeatingCount,
-            climateCount,
+            rooms,
+            lightingGroups,
+            mechanisms,
+            fans,
+            floorHeating,
+            climate,
         ] = await Promise.all([
-            fetchSummaryCount(endpoints.rooms),
-            fetchSummaryCount(endpoints.lighting),
-            fetchSummaryCount(endpoints.mechanisms),
-            fetchSummaryCount(endpoints.fans),
-            fetchSummaryCount(endpoints.floorHeating),
-            fetchSummaryCount(endpoints.climate),
+            fetchJson(`/projects/${projectId}/rooms`),
+            fetchJson(`/projects/${projectId}/lighting-groups`),
+            fetchJson(`/projects/${projectId}/mechanisms`),
+            fetchJson(`/projects/${projectId}/fans`),
+            fetchJson(`/projects/${projectId}/floor-heating`),
+            fetchJson(`/projects/${projectId}/climate`),
         ]);
 
-        projectSummaryElements.rooms.textContent = roomsCount;
-        projectSummaryElements.lighting.textContent = lightingCount;
-        projectSummaryElements.mechanisms.textContent = mechanismsCount;
-        projectSummaryElements.fans.textContent = fansCount;
-        projectSummaryElements.floorHeating.textContent = floorHeatingCount;
-        projectSummaryElements.climate.textContent = climateCount;
+        const rgbwLightingGroups = lightingGroups.filter(isRgbwLightingGroup);
+        const regularLightingGroups = lightingGroups.filter((item) => !isRgbwLightingGroup(item));
+
+        setSummaryValue(projectSummaryElements.rooms, rooms.length);
+        setSummaryValue(projectSummaryElements.lighting, regularLightingGroups.length);
+        setSummaryValue(projectSummaryElements.rgbwLighting, rgbwLightingGroups.length);
+        setSummaryValue(projectSummaryElements.mechanisms, mechanisms.length);
+        setSummaryValue(projectSummaryElements.fans, fans.length);
+        setSummaryValue(projectSummaryElements.floorHeating, floorHeating.length);
+        setSummaryValue(projectSummaryElements.climate, climate.length);
 
         const time = new Date().toLocaleTimeString();
 
