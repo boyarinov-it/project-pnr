@@ -207,3 +207,41 @@ th {
     }
 }
 
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.summary-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.summary-label {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.summary-value {
+    display: block;
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.summary-row {
+    margin-bottom: 0;
+}
+
+@media (max-width: 1000px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
