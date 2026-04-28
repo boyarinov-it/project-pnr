@@ -22,10 +22,10 @@
 
             <button class="tab-button" data-tab="lighting">Освещение</button>
             <button class="tab-button" data-tab="mechanisms">Механизмы</button>
-            <button class="tab-button" data-tab="fans">Вентиляторы</button>
+            <button class="tab-button" data-tab="fans">Вытяжные вентиляторы</button>
                 <button class="tab-button" data-tab="sockets-contactors">Розетки / контакторы</button>
             <button class="tab-button" data-tab="floor-heating">Теплый пол</button>
-            <button class="tab-button" data-tab="climate">Климат</button>
+            <button class="tab-button" data-tab="climate">Климат контроль</button>
             <button class="tab-button" data-tab="exports">Выгрузки</button>
         </nav>
 
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="summary-item">
-                        <span class="summary-label">Вентиляторы</span>
+                        <span class="summary-label">Вытяжные вентиляторы</span>
                         <span class="summary-value" id="summaryFansCount">—</span>
                     </div>
 
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="summary-item">
-                        <span class="summary-label">Климат</span>
+                        <span class="summary-label">Климат контроль</span>
                         <span class="summary-value" id="summaryClimateCount">—</span>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="roomCodeInput" type="text" placeholder="LIVING" />
                     </label>
                 </div>
@@ -226,7 +226,7 @@
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="lightingCodeInput" type="text" placeholder="10" />
                     </label>
 
@@ -260,13 +260,13 @@
                     </label>
 
                     <label>
-                        Канал диммера
+                        Выход / канал диммера
                         <input id="lightingDimmerChannelInput" type="number" min="1" placeholder="2" />
                     </label>
                 </div>
 
                 <div class="row">
-                    <button id="saveLightingButton">Добавить группу света</button>
+                    <button id="saveLightingButton">Добавить группу</button>
                     <button id="clearLightingFormButton" class="secondary">Очистить</button>
                 </div>
 
@@ -306,7 +306,7 @@
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="mechanismCodeInput" type="text" placeholder="M1" />
                     </label>
 
@@ -335,7 +335,7 @@
                     </label>
 
                     <label>
-                        Канал
+                        Выход / канал
                         <input id="mechanismDeviceChannelInput" type="text" placeholder="A1" />
                     </label>
                 </div>
@@ -356,7 +356,7 @@
                             <th>Кол-во</th>
                             <th>Устройство</th>
                             <th>Адрес</th>
-                            <th>Канал</th>
+                            <th>Выход / канал</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -376,12 +376,12 @@
                     </label>
 
                     <label>
-                        Название вентилятора
+                        Название нагрузки
                         <input id="fanNameInput" type="text" placeholder="Вентилятор" />
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="fanCodeInput" type="text" placeholder="В1" />
                     </label>
 
@@ -401,13 +401,13 @@
                     </label>
 
                     <label>
-                        Канал
+                        Выход / канал
                         <input id="fanDeviceChannelInput" type="text" placeholder="A1" />
                     </label>
                 </div>
 
                 <div class="row">
-                    <button id="saveFanButton">Добавить вентилятор</button>
+                    <button id="saveFanButton">Добавить нагрузку</button>
                     <button id="clearFanFormButton" class="secondary">Очистить</button>
                 </div>
 
@@ -421,7 +421,7 @@
                             <th>Кол-во</th>
                             <th>Устройство</th>
                             <th>Адрес</th>
-                            <th>Канал</th>
+                            <th>Выход / канал</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -447,7 +447,7 @@
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="floorHeatingCodeInput" type="text" placeholder="ТП1" />
                     </label>
 
@@ -472,7 +472,7 @@
                     </label>
 
                     <label>
-                        Канал
+                        Выход / канал
                         <input id="floorHeatingDeviceChannelInput" type="text" placeholder="A1" />
                     </label>
                 </div>
@@ -493,7 +493,7 @@
                             <th>Кол-во</th>
                             <th>Устройство</th>
                             <th>Адрес</th>
-                            <th>Канал</th>
+                            <th>Выход / канал</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -504,7 +504,7 @@
 
                 <section class="tab-panel" id="tab-climate">
             <section class="card">
-                <h2>Климат</h2>
+                <h2>Климат контроль</h2>
 <input id="climateIdInput" type="hidden" />
 
                 <div class="grid">
@@ -519,12 +519,12 @@
                     </label>
 
                     <label>
-                        Код
+                        Код / номер
                         <input id="climateCodeInput" type="text" placeholder="К1" />
                     </label>
 
                     <label>
-                        Тип климата
+                        Тип нагрузки
                         <select id="climateTypeInput">
                             <option value="AC">AC</option>
                             <option value="FANCOIL">FANCOIL</option>
@@ -550,7 +550,7 @@
                     </label>
 
                     <label>
-                        Канал
+                        Выход / канал
                         <input id="climateDeviceChannelInput" type="text" placeholder="A1" />
                     </label>
 
@@ -581,7 +581,7 @@
                             <th>Кол-во</th>
                             <th>Устройство</th>
                             <th>Адрес</th>
-                            <th>Канал</th>
+                            <th>Выход / канал</th>
                             <th>Шлюз</th>
                             <th>External ID</th>
                             <th></th>
@@ -606,7 +606,7 @@
                     </label>
 
                     <label>
-                        Код / номер нагрузки
+                        Код / номер
                         <input id="socketContactorCodeInput" type="text" placeholder="1" />
                     </label>
 
@@ -693,14 +693,14 @@
         </section>
     </div>
 
-    <script src="/app.js?v=20260428171735"></script>
-    <script src="/equipment.js?v=20260428162406"></script>
-    <script src="/sockets-contactors.js?v=20260428161943"></script>
-    <script src="/project-summary.js?v=20260428165122"></script>
-    <script src="/mechanisms.js"></script>
-    <script src="/fans.js"></script>
-    <script src="/floor-heating.js"></script>
-    <script src="/climate.js"></script>
+    <script src="/app.js?v=20260428172524"></script>
+    <script src="/equipment.js?v=20260428172524"></script>
+    <script src="/sockets-contactors.js?v=20260428172524"></script>
+    <script src="/project-summary.js?v=20260428172524"></script>
+    <script src="/mechanisms.js?v=20260428172524"></script>
+    <script src="/fans.js?v=20260428172524"></script>
+    <script src="/floor-heating.js?v=20260428172524"></script>
+    <script src="/climate.js?v=20260428172524"></script>
 </body>
 </html>
 
