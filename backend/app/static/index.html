@@ -16,17 +16,21 @@
         </header>
 
         <nav class="tabs">
-                            <button class="tab-button active" data-tab="project">Проект</button>
-                <button class="tab-button" data-tab="rooms">Экспликация</button>
-                <button class="tab-button" data-tab="equipment">Оборудование</button>
-                <button class="tab-button" data-tab="lighting">Освещение</button>
-                <button class="tab-button" data-tab="mechanisms">Механизмы</button>
+            <button class="tab-button active" data-tab="project">Проект</button>
+            <button class="tab-button" data-tab="rooms">Экспликация</button>
+            <button class="tab-button" data-tab="equipment">Оборудование</button>
+
+            <button class="tab-button" data-tab="lighting">Освещение</button>
+            <button class="tab-button" data-tab="mechanisms">Механизмы</button>
+            <button class="tab-button" data-tab="fans">Вентиляторы</button>
                 <button class="tab-button" data-tab="sockets-contactors">Розетки / контакторы</button>
-                <button class="tab-button" data-tab="fans">Вентиляторы</button>
-                <button class="tab-button" data-tab="floor-heating">Теплый пол</button>
-                <button class="tab-button" data-tab="climate">Климат</button>
-                <button class="tab-button" data-tab="exports">Выгрузки</button>
-<section class="card">
+            <button class="tab-button" data-tab="floor-heating">Теплый пол</button>
+            <button class="tab-button" data-tab="climate">Климат</button>
+            <button class="tab-button" data-tab="exports">Выгрузки</button>
+        </nav>
+
+        <section class="tab-panel active" id="tab-project">
+            <section class="card">
                 <h2>Проект</h2>
 
                 <div class="row">
@@ -44,7 +48,7 @@
                 <h2>Сводка проекта</h2>
 
                 <div class="summary-grid">
-                                        <div class="summary-item">
+                    <div class="summary-item">
                         <span class="summary-label">Помещения</span>
                         <span class="summary-value" id="summaryRoomsCount">—</span>
                     </div>
@@ -70,13 +74,13 @@
                     </div>
 
                     <div class="summary-item">
-                        <span class="summary-label">Розетки / контакторы</span>
-                        <span class="summary-value" id="summarySocketsContactorsCount">—</span>
+                        <span class="summary-label">Вентиляторы</span>
+                        <span class="summary-value" id="summaryFansCount">—</span>
                     </div>
 
                     <div class="summary-item">
-                        <span class="summary-label">Вентиляторы</span>
-                        <span class="summary-value" id="summaryFansCount">—</span>
+                        <span class="summary-label">Розетки / контакторы</span>
+                        <span class="summary-value" id="summarySocketsContactorsCount">—</span>
                     </div>
 
                     <div class="summary-item">
@@ -88,7 +92,42 @@
                         <span class="summary-label">Климат</span>
                         <span class="summary-value" id="summaryClimateCount">—</span>
                     </div>
+                </div>
 
+                <div class="row summary-row">
+                    <button id="refreshProjectSummaryButton" class="secondary">Обновить сводку</button>
+                    <span id="summaryStatus" class="muted">Сводка не загружена</span>
+                </div>
+            </section>
+
+        </section>
+
+        <section class="tab-panel" id="tab-rooms">
+            <section class="card">
+                <h2>Экспликация помещений</h2>
+
+                <input id="roomIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        Номер помещения
+                        <input id="roomNumberInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название RU
+                        <input id="roomNameRuInput" type="text" placeholder="Гостиная" />
+                    </label>
+
+                    <label>
+                        Название EN
+                        <input id="roomNameEnInput" type="text" placeholder="Living room" />
+                    </label>
+
+                    <label>
+                        Код
+                        <input id="roomCodeInput" type="text" placeholder="LIVING" />
+                    </label>
                 </div>
 
                 <div class="row">
@@ -654,10 +693,10 @@
         </section>
     </div>
 
-    <script src="/app.js?v=20260428170547"></script>
-    <script src="/equipment.js?v=20260428170547"></script>
-    <script src="/sockets-contactors.js?v=20260428170547"></script>
-    <script src="/project-summary.js?v=20260428170547"></script>
+    <script src="/app.js?v=20260428161949"></script>
+    <script src="/equipment.js?v=20260428162406"></script>
+    <script src="/sockets-contactors.js?v=20260428161943"></script>
+    <script src="/project-summary.js?v=20260428165122"></script>
     <script src="/mechanisms.js"></script>
     <script src="/fans.js"></script>
     <script src="/floor-heating.js"></script>
