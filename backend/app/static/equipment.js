@@ -247,6 +247,7 @@ function refreshEquipmentAddressSelectOptions() {
 function attachEquipmentAddressSuggestions() {
     const inputIds = [
         "lightingDeviceAddressInput",
+        "socketContactorDeviceAddressInput",
         "mechanismDeviceAddressInput",
         "fanDeviceAddressInput",
         "floorHeatingDeviceAddressInput",
@@ -376,6 +377,7 @@ setTimeout(() => {
         "floorHeatingDeviceAddressInput",
         "climateDeviceAddressInput",
         "climateGatewayAddressInput",
+        "socketContactorDeviceAddressInput",
     ];
 
     const typeInputIds = [
@@ -384,6 +386,7 @@ setTimeout(() => {
 
     const addressToTypeInputMap = {
         lightingDeviceAddressInput: "lightingDeviceTypeInput",
+        socketContactorDeviceAddressInput: "socketContactorDeviceTypeInput",
     };
 
     function getCatalogItems() {

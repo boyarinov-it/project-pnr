@@ -23,6 +23,7 @@
             <button class="tab-button" data-tab="lighting">Освещение</button>
             <button class="tab-button" data-tab="mechanisms">Механизмы</button>
             <button class="tab-button" data-tab="fans">Вентиляторы</button>
+                <button class="tab-button" data-tab="sockets-contactors">Розетки / контакторы</button>
             <button class="tab-button" data-tab="floor-heating">Теплый пол</button>
             <button class="tab-button" data-tab="climate">Климат</button>
             <button class="tab-button" data-tab="exports">Выгрузки</button>
@@ -75,6 +76,11 @@
                     <div class="summary-item">
                         <span class="summary-label">Вентиляторы</span>
                         <span class="summary-value" id="summaryFansCount">—</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-label">Розетки / контакторы</span>
+                        <span class="summary-value" id="summarySocketsContactorsCount">—</span>
                     </div>
 
                     <div class="summary-item">
@@ -586,6 +592,83 @@
             </section>
         </section>
 
+
+        <section class="tab-panel" id="tab-sockets-contactors">
+            <section class="card">
+                <h2>Розетки / контакторы</h2>
+
+                <input id="socketContactorIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        № помещения
+                        <select id="socketContactorRoomNumberInput"></select>
+                    </label>
+
+                    <label>
+                        Код / номер нагрузки
+                        <input id="socketContactorCodeInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название нагрузки
+                        <input id="socketContactorNameInput" type="text" placeholder="Розетка ТВ" />
+                    </label>
+
+                    <label>
+                        Тип нагрузки
+                        <select id="socketContactorLoadTypeInput">
+                            <option value="SOCKET">SOCKET</option>
+                            <option value="CONTACTOR">CONTACTOR</option>
+                            <option value="LIGHT">LIGHT</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Тип устройства
+                        <input id="socketContactorDeviceTypeInput" type="text" placeholder="RELAY" />
+                    </label>
+
+                    <label>
+                        Адрес устройства
+                        <input id="socketContactorDeviceAddressInput" type="text" placeholder="1.1.20" />
+                    </label>
+
+                    <label>
+                        Выход
+                        <input id="socketContactorDeviceOutputInput" type="text" placeholder="A1" />
+                    </label>
+                </div>
+
+                <label>
+                    Комментарий
+                    <input id="socketContactorDescriptionInput" type="text" placeholder="Опционально" />
+                </label>
+
+                <div class="row">
+                    <button id="saveSocketContactorButton">Добавить нагрузку</button>
+                    <button id="clearSocketContactorFormButton" class="secondary">Очистить</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Помещение</th>
+                            <th>Код</th>
+                            <th>Название</th>
+                            <th>Тип</th>
+                            <th>Устройство</th>
+                            <th>Адрес</th>
+                            <th>Выход</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="socketsContactorsTableBody"></tbody>
+                </table>
+            </section>
+        </section>
+
         <section class="tab-panel" id="tab-exports">
             <section class="card">
                 <h2>Выгрузки ETS CSV</h2>
@@ -598,6 +681,7 @@
                     <button data-export="mechanisms">2 Механизмы</button>
                     <button data-export="floor-heating">3 Теплый пол</button>
                     <button data-export="climate">5 Климат контроль</button>
+                    <button data-export="sockets-contactors">7 Розетки и контакторы</button>
                     <button data-export="fans">8 Вытяжные вентиляторы</button>
                 </div>
             </section>
@@ -609,9 +693,10 @@
         </section>
     </div>
 
-    <script src="/app.js?v=20260428153155"></script>
-    <script src="/equipment.js?v=20260428151249"></script>
-    <script src="/project-summary.js?v=20260428154152"></script>
+    <script src="/app.js?v=20260428161949"></script>
+    <script src="/equipment.js?v=20260428162406"></script>
+    <script src="/sockets-contactors.js?v=20260428161943"></script>
+    <script src="/project-summary.js?v=20260428161955"></script>
     <script src="/mechanisms.js"></script>
     <script src="/fans.js"></script>
     <script src="/floor-heating.js"></script>
