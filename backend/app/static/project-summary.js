@@ -4,6 +4,7 @@
     status: document.getElementById("summaryStatus"),
 
     rooms: document.getElementById("summaryRoomsCount"),
+    equipment: document.getElementById("summaryEquipmentCount"),
     lighting: document.getElementById("summaryLightingCount"),
     rgbwLighting: document.getElementById("summaryRgbwLightingCount"),
     mechanisms: document.getElementById("summaryMechanismsCount"),
@@ -25,6 +26,7 @@ function setSummaryValue(element, value) {
 
 function setSummaryLoading() {
     setSummaryValue(projectSummaryElements.rooms, "…");
+    setSummaryValue(projectSummaryElements.equipment, "…");
     setSummaryValue(projectSummaryElements.lighting, "…");
     setSummaryValue(projectSummaryElements.rgbwLighting, "…");
     setSummaryValue(projectSummaryElements.mechanisms, "…");
@@ -35,6 +37,7 @@ function setSummaryLoading() {
 
 function setSummaryEmpty() {
     setSummaryValue(projectSummaryElements.rooms, "—");
+    setSummaryValue(projectSummaryElements.equipment, "—");
     setSummaryValue(projectSummaryElements.lighting, "—");
     setSummaryValue(projectSummaryElements.rgbwLighting, "—");
     setSummaryValue(projectSummaryElements.mechanisms, "—");
@@ -86,6 +89,7 @@ async function refreshProjectSummary() {
     try {
         const [
             rooms,
+            equipment,
             lightingGroups,
             mechanisms,
             fans,
@@ -93,6 +97,7 @@ async function refreshProjectSummary() {
             climate,
         ] = await Promise.all([
             fetchJson(`/projects/${projectId}/rooms`),
+            fetchJson(`/projects/${projectId}/equipment`),
             fetchJson(`/projects/${projectId}/lighting-groups`),
             fetchJson(`/projects/${projectId}/mechanisms`),
             fetchJson(`/projects/${projectId}/fans`),
@@ -104,6 +109,7 @@ async function refreshProjectSummary() {
         const regularLightingGroups = lightingGroups.filter((item) => !isRgbwLightingGroup(item));
 
         setSummaryValue(projectSummaryElements.rooms, rooms.length);
+        setSummaryValue(projectSummaryElements.equipment, equipment.length);
         setSummaryValue(projectSummaryElements.lighting, regularLightingGroups.length);
         setSummaryValue(projectSummaryElements.rgbwLighting, rgbwLightingGroups.length);
         setSummaryValue(projectSummaryElements.mechanisms, mechanisms.length);
