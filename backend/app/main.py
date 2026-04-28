@@ -41,6 +41,7 @@ from app.api.project_csv_download import router as project_csv_download_router
 from app.api.validation import router as validation_router
 from app.api.export_jobs import router as export_jobs_router
 from app.api.export_files import router as export_files_router
+from app.api.equipment import router as equipment_router
 
 from app.core.config import settings
 from app.db.session import engine
@@ -73,6 +74,7 @@ app = FastAPI(
 # 1. Main project data
 app.include_router(projects_router)
 app.include_router(rooms_router)
+app.include_router(equipment_router)
 app.include_router(lighting_groups_router)
 app.include_router(mechanisms_router)
 app.include_router(fans_router)

@@ -245,3 +245,23 @@ th {
         grid-template-columns: 1fr;
     }
 }
+
+.equipment-address-select {
+    margin-top: 6px;
+    width: 100%;
+    font-size: 13px;
+}
+
+.equipment-original-input-hidden {
+    display: none !important;
+}
+
+.equipment-catalog-select {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 14px;
+}
