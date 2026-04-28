@@ -19,6 +19,7 @@ from app.api.ets_central_functions_v1 import router as ets_central_functions_v1_
 from app.api.ets_rooms_v1 import router as ets_rooms_v1_router
 from app.api.ets_csv_v1 import router as ets_csv_v1_router
 from app.api.ets_csv_v1_download import router as ets_csv_v1_download_router
+from app.api.ets_rgbw_lighting_v1_download import router as ets_rgbw_lighting_v1_download_router
 from app.api.ets_mechanisms_v1 import router as ets_mechanisms_v1_router
 from app.api.ets_mechanisms_v1_download import router as ets_mechanisms_v1_download_router
 from app.api.ets_fans_v1 import router as ets_fans_v1_router
@@ -89,6 +90,7 @@ app.include_router(ets_central_functions_v1_router)
 app.include_router(ets_rooms_v1_router)
 app.include_router(ets_csv_v1_router)
 app.include_router(ets_csv_v1_download_router)
+app.include_router(ets_rgbw_lighting_v1_download_router)
 app.include_router(ets_mechanisms_v1_router)
 app.include_router(ets_mechanisms_v1_download_router)
 app.include_router(ets_fans_v1_router)

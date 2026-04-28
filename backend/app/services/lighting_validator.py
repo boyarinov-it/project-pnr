@@ -3,6 +3,11 @@
 from app.rules.lighting_profile import LIGHTING_ETS_PROFILE
 
 
+def is_rgbw_lighting_group(group: object) -> bool:
+    return str(getattr(group, "load_type", "") or "").strip().upper() == "RGBW"
+
+
+
 @dataclass
 class ValidationIssue:
     level: str
@@ -16,6 +21,10 @@ def validate_lighting_groups_for_export(project) -> list[ValidationIssue]:
     required_fields = LIGHTING_ETS_PROFILE["validation"]["required_fields"]
 
     for group in project.lighting_groups:
+
+        if is_rgbw_lighting_group(group):
+
+            continue
         if "group.code" in required_fields:
             if not group.code:
                 issues.append(ValidationIssue("error", "missing_group_code", "Lighting group code is missing", group.id))
