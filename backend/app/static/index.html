@@ -18,6 +18,8 @@
         <nav class="tabs">
             <button class="tab-button active" data-tab="project">Проект</button>
             <button class="tab-button" data-tab="rooms">Экспликация</button>
+            <button class="tab-button" data-tab="equipment">Оборудование</button>
+
             <button class="tab-button" data-tab="lighting">Освещение</button>
             <button class="tab-button" data-tab="mechanisms">Механизмы</button>
             <button class="tab-button" data-tab="fans">Вентиляторы</button>
@@ -137,6 +139,64 @@
                 </table>
             </section>
         </section>
+
+
+        <section class="tab-panel" id="tab-equipment">
+            <section class="card">
+                <h2>Оборудование</h2>
+
+                <input id="equipmentIdInput" type="hidden" />
+
+                <div class="grid">
+                    <label>
+                        № помещения
+                        <input id="equipmentRoomNumberInput" type="text" placeholder="1" />
+                    </label>
+
+                    <label>
+                        Название оборудования
+                        <input id="equipmentNameInput" type="text" placeholder="DALI Gateway" />
+                    </label>
+
+                    <label>
+                        Тип оборудования
+                        <input id="equipmentTypeInput" type="text" placeholder="DALI / RELAY / HEATING_ACTUATOR" />
+                    </label>
+
+                    <label>
+                        Индивидуальный адрес
+                        <input id="equipmentIndividualAddressInput" type="text" placeholder="1.1.10" />
+                    </label>
+                </div>
+
+                <label>
+                    Комментарий
+                    <input id="equipmentDescriptionInput" type="text" placeholder="Щит, линия, назначение" />
+                </label>
+
+                <div class="row">
+                    <button id="saveEquipmentButton">Добавить оборудование</button>
+                    <button id="clearEquipmentFormButton" class="secondary">Очистить</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Помещение</th>
+                            <th>Название</th>
+                            <th>Тип</th>
+                            <th>Инд. адрес</th>
+                            <th>Комментарий</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="equipmentTableBody"></tbody>
+                </table>
+            </section>
+        </section>
+
+        <datalist id="equipmentAddressOptions"></datalist>
 
         <section class="tab-panel" id="tab-lighting">
             <section class="card">
@@ -545,6 +605,7 @@
     </div>
 
     <script src="/app.js"></script>
+    <script src="/equipment.js?v=20260428151249"></script>
     <script src="/project-summary.js?v=20260428141004"></script>
     <script src="/mechanisms.js"></script>
     <script src="/fans.js"></script>
