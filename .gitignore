@@ -29,3 +29,6 @@ build/
 .vscode/
 backend/storage/temp_exports/
 backend/storage/temp_exports/
+
+.env.docker
+backend/test_exports/
