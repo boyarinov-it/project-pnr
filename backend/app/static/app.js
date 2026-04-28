@@ -609,3 +609,65 @@ function updateRoomNumberSelects() {
         }
     }
 }
+
+function normalizeMainNavigationOrder() {
+    const tabOrder = [
+        "project",
+        "rooms",
+        "equipment",
+        "lighting",
+        "mechanisms",
+        "sockets-contactors",
+        "fans",
+        "floor-heating",
+        "climate",
+        "exports",
+    ];
+
+    const firstTabButton = document.querySelector(".tab-button[data-tab]");
+    const tabsContainer = firstTabButton ? firstTabButton.parentElement : null;
+
+    if (tabsContainer) {
+        tabOrder.forEach((tabName) => {
+            const button = tabsContainer.querySelector(`.tab-button[data-tab="${tabName}"]`);
+            if (button) {
+                tabsContainer.appendChild(button);
+            }
+        });
+    }
+
+    const exportOrder = [
+        "central-functions",
+        "rooms",
+        "lighting",
+        "rgbw-lighting",
+        "mechanisms",
+        "sockets-contactors",
+        "fans",
+        "floor-heating",
+        "climate",
+    ];
+
+    const firstExportButton = document.querySelector("button[data-export]");
+    const exportContainer = firstExportButton ? firstExportButton.parentElement : null;
+
+    if (exportContainer) {
+        exportOrder.forEach((exportName) => {
+            const button = exportContainer.querySelector(`button[data-export="${exportName}"]`);
+            if (button) {
+                exportContainer.appendChild(button);
+            }
+        });
+    }
+}
+
+function initUiCleanup() {
+    normalizeMainNavigationOrder();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initUiCleanup);
+} else {
+    initUiCleanup();
+}
+
