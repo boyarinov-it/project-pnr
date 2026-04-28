@@ -247,10 +247,47 @@ async function loadLightingGroups() {
     renderLightingGroups();
 }
 
+
+function getLightingGroupSortNumber(group) {
+    const rawCode = String(group?.code ?? "").trim().toUpperCase();
+    const match = rawCode.match(/\d+/);
+
+    if (!match) {
+        return Number.MAX_SAFE_INTEGER;
+    }
+
+    return Number(match[0]);
+}
+
+function sortLightingGroupsByGroupNumber(groups) {
+    return [...(groups || [])].sort((a, b) => {
+        const numberA = getLightingGroupSortNumber(a);
+        const numberB = getLightingGroupSortNumber(b);
+
+        if (numberA !== numberB) {
+            return numberA - numberB;
+        }
+
+        const codeA = String(a?.code ?? "");
+        const codeB = String(b?.code ?? "");
+
+        const codeCompare = codeA.localeCompare(codeB, "ru", {
+            numeric: true,
+            sensitivity: "base",
+        });
+
+        if (codeCompare !== 0) {
+            return codeCompare;
+        }
+
+        return Number(a?.id ?? 0) - Number(b?.id ?? 0);
+    });
+}
+
 function renderLightingGroups() {
     elements.lightingTableBody.innerHTML = "";
 
-    for (const group of state.lightingGroups) {
+    for (const group of sortLightingGroupsByGroupNumber(state.lightingGroups)) {
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
