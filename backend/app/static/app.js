@@ -445,6 +445,7 @@ async function downloadExport(type) {
         "mechanisms": "2 Механизмы",
         "floor-heating": "3 Теплый пол",
         "climate": "5 Климат контроль",
+        "sockets-contactors": "7 Розетки и контакторы",
         "fans": "8 Вытяжные вентиляторы",
     };
 
@@ -456,6 +457,7 @@ async function downloadExport(type) {
         "mechanisms": `/projects/${state.activeProjectId}/mechanisms-ets-csv-v1-download`,
         "floor-heating": `/projects/${state.activeProjectId}/floor-heating-ets-csv-v1-download`,
         "climate": `/projects/${state.activeProjectId}/climate-ets-csv-v1-download`,
+        "sockets-contactors": `/projects/${state.activeProjectId}/sockets-contactors-ets-csv-v1-download`,
         "fans": `/projects/${state.activeProjectId}/fans-ets-csv-v1-download`,
     };
 

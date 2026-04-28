@@ -9,6 +9,7 @@
     rgbwLighting: document.getElementById("summaryRgbwLightingCount"),
     mechanisms: document.getElementById("summaryMechanismsCount"),
     fans: document.getElementById("summaryFansCount"),
+    socketsContactors: document.getElementById("summarySocketsContactorsCount"),
     floorHeating: document.getElementById("summaryFloorHeatingCount"),
     climate: document.getElementById("summaryClimateCount"),
 };
@@ -31,6 +32,7 @@ function setSummaryLoading() {
     setSummaryValue(projectSummaryElements.rgbwLighting, "…");
     setSummaryValue(projectSummaryElements.mechanisms, "…");
     setSummaryValue(projectSummaryElements.fans, "…");
+    setSummaryValue(projectSummaryElements.socketsContactors, "…");
     setSummaryValue(projectSummaryElements.floorHeating, "…");
     setSummaryValue(projectSummaryElements.climate, "…");
 }
@@ -42,6 +44,7 @@ function setSummaryEmpty() {
     setSummaryValue(projectSummaryElements.rgbwLighting, "—");
     setSummaryValue(projectSummaryElements.mechanisms, "—");
     setSummaryValue(projectSummaryElements.fans, "—");
+    setSummaryValue(projectSummaryElements.socketsContactors, "—");
     setSummaryValue(projectSummaryElements.floorHeating, "—");
     setSummaryValue(projectSummaryElements.climate, "—");
 }
