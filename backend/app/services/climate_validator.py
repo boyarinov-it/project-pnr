@@ -66,7 +66,7 @@ def validate_climate_item(item: Climate) -> list[ClimateValidationIssue]:
     if not str(item.device_type or "").strip():
         issues.append(
             ClimateValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_type",
                 message="Device type is missing",
                 entity_id=item.id,
@@ -76,7 +76,7 @@ def validate_climate_item(item: Climate) -> list[ClimateValidationIssue]:
     if not str(item.device_address or "").strip():
         issues.append(
             ClimateValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_address",
                 message="Device address is missing",
                 entity_id=item.id,
@@ -86,7 +86,7 @@ def validate_climate_item(item: Climate) -> list[ClimateValidationIssue]:
     if not str(item.device_channel or "").strip():
         issues.append(
             ClimateValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_channel",
                 message="Device channel is missing",
                 entity_id=item.id,

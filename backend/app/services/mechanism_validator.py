@@ -66,7 +66,7 @@ def validate_mechanism(mechanism: Mechanism) -> list[MechanismValidationIssue]:
     if not str(mechanism.device_type or "").strip():
         issues.append(
             MechanismValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_type",
                 message="Device type is missing",
                 entity_id=mechanism.id,
@@ -76,7 +76,7 @@ def validate_mechanism(mechanism: Mechanism) -> list[MechanismValidationIssue]:
     if not str(mechanism.device_address or "").strip():
         issues.append(
             MechanismValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_address",
                 message="Device address is missing",
                 entity_id=mechanism.id,
@@ -86,7 +86,7 @@ def validate_mechanism(mechanism: Mechanism) -> list[MechanismValidationIssue]:
     if not str(mechanism.device_channel or "").strip():
         issues.append(
             MechanismValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_channel",
                 message="Device channel is missing",
                 entity_id=mechanism.id,

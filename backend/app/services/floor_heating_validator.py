@@ -46,7 +46,7 @@ def validate_floor_heating_item(item: FloorHeating) -> list[FloorHeatingValidati
     if not str(item.thermostat_type or "").strip():
         issues.append(
             FloorHeatingValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_thermostat_type",
                 message="Thermostat type is missing",
                 entity_id=item.id,
@@ -66,7 +66,7 @@ def validate_floor_heating_item(item: FloorHeating) -> list[FloorHeatingValidati
     if not str(item.device_type or "").strip():
         issues.append(
             FloorHeatingValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_type",
                 message="Device type is missing",
                 entity_id=item.id,
@@ -76,7 +76,7 @@ def validate_floor_heating_item(item: FloorHeating) -> list[FloorHeatingValidati
     if not str(item.device_address or "").strip():
         issues.append(
             FloorHeatingValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_address",
                 message="Device address is missing",
                 entity_id=item.id,
@@ -86,7 +86,7 @@ def validate_floor_heating_item(item: FloorHeating) -> list[FloorHeatingValidati
     if not str(item.device_channel or "").strip():
         issues.append(
             FloorHeatingValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_channel",
                 message="Device channel is missing",
                 entity_id=item.id,

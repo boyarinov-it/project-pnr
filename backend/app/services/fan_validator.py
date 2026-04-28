@@ -56,7 +56,7 @@ def validate_fan(fan: Fan) -> list[FanValidationIssue]:
     if not str(fan.device_type or "").strip():
         issues.append(
             FanValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_type",
                 message="Device type is missing",
                 entity_id=fan.id,
@@ -66,7 +66,7 @@ def validate_fan(fan: Fan) -> list[FanValidationIssue]:
     if not str(fan.device_address or "").strip():
         issues.append(
             FanValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_address",
                 message="Device address is missing",
                 entity_id=fan.id,
@@ -76,7 +76,7 @@ def validate_fan(fan: Fan) -> list[FanValidationIssue]:
     if not str(fan.device_channel or "").strip():
         issues.append(
             FanValidationIssue(
-                level="error",
+                level="warning",
                 code="missing_device_channel",
                 message="Device channel is missing",
                 entity_id=fan.id,
