@@ -1,4 +1,4 @@
-﻿const projectSummaryElements = {
+const projectSummaryElements = {
     projectSelect: document.getElementById("projectSelect"),
     refreshButton: document.getElementById("refreshProjectSummaryButton"),
     status: document.getElementById("summaryStatus"),
@@ -53,7 +53,7 @@ async function fetchJson(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
+        throw new Error(`${response.status} ${response.statusText}: ${url}`);
     }
 
     return await response.json();
@@ -96,6 +96,7 @@ async function refreshProjectSummary() {
             lightingGroups,
             mechanisms,
             fans,
+            socketsContactors,
             floorHeating,
             climate,
         ] = await Promise.all([
@@ -104,6 +105,7 @@ async function refreshProjectSummary() {
             fetchJson(`/projects/${projectId}/lighting-groups`),
             fetchJson(`/projects/${projectId}/mechanisms`),
             fetchJson(`/projects/${projectId}/fans`),
+            fetchJson(`/projects/${projectId}/sockets-contactors`),
             fetchJson(`/projects/${projectId}/floor-heating`),
             fetchJson(`/projects/${projectId}/climate`),
         ]);
@@ -117,6 +119,7 @@ async function refreshProjectSummary() {
         setSummaryValue(projectSummaryElements.rgbwLighting, rgbwLightingGroups.length);
         setSummaryValue(projectSummaryElements.mechanisms, mechanisms.length);
         setSummaryValue(projectSummaryElements.fans, fans.length);
+        setSummaryValue(projectSummaryElements.socketsContactors, socketsContactors.length);
         setSummaryValue(projectSummaryElements.floorHeating, floorHeating.length);
         setSummaryValue(projectSummaryElements.climate, climate.length);
 
@@ -130,6 +133,10 @@ async function refreshProjectSummary() {
 
         if (projectSummaryElements.status) {
             projectSummaryElements.status.textContent = `Ошибка сводки: ${error.message}`;
+        }
+
+        if (typeof log === "function") {
+            log(`Ошибка сводки: ${error.message}`);
         }
     }
 }
